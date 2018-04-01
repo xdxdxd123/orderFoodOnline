@@ -7,25 +7,39 @@ import com.xidong.orderFoodOnline.dao.IUserDao;
 import com.xidong.orderFoodOnline.model.User;
 import com.xidong.orderFoodOnline.service.IUserService;
 
-
-@Service(value="userService")
+@Service(value = "userService")
 @Transactional
 public class UserServiceImpl implements IUserService {
-	@Resource(name="userDao")
-private  IUserDao  userDao;
+	@Resource(name = "userDao")
+	private IUserDao userDao;
+
 	public void addUser(User user) throws Exception {
 		// TODO Auto-generated method stub
-userDao.addUser(user);
+		userDao.addUser(user);
 	}
+
 	@Override
 	public boolean login(String username, String password) throws Exception {
 		// TODO Auto-generated method stub
-		return	  userDao.findUser(username, password);
+		return userDao.findUser(username, password);
 	}
+
 	@Override
 	public boolean checkUsernameExist(String username) throws Exception {
 		// TODO Auto-generated method stub
 		return userDao.checkUsernameExist(username);
+	}
+
+	@Override
+	public User checkIdentity(String username, String password, String userType) throws Exception {
+		// TODO Auto-generated method stub
+
+		User user = userDao.checkIdentity(username, password, userType);
+		if (user != null) {
+			return user;
+		} else {
+			return null;
+		}
 	}
 
 }

@@ -1,14 +1,17 @@
 package com.xidong.orderFoodOnline.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xidong.orderFoodOnline.model.Product;
 import com.xidong.orderFoodOnline.service.IProductService;
 
-@Controller
+@Controller      
 @RequestMapping(value="/product")
 public class ProductController {
 	@Autowired
@@ -46,13 +49,14 @@ public class ProductController {
 		}
 	  }
 	
-	@RequestMapping(value="/select",method=RequestMethod.POST)
-	 void  selectProduct(String shopId){
+	@RequestMapping(value="/list",method=RequestMethod.POST)
+	@ResponseBody List<Product> selectProduct(String shopId){
 		  try {
-			productService.selectAllProduct(shopId);
+	 return productService.selectAllProduct(shopId);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return null;
 	  }
 }

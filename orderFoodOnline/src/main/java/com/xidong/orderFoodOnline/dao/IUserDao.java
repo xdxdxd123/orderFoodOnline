@@ -8,4 +8,6 @@ public interface IUserDao {
 	boolean findUser(String username, String password) throws Exception;
 
 	boolean checkUsernameExist(String username) throws Exception;
+	
+	User  checkIdentity(String username ,String password ,String userType) throws  Exception;
 }

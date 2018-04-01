@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link type="text/css" rel="stylesheet"
+	href="/orderFoodOnline/resources/plugins/bootstrap3.3.7/css/bootstrap.css" />
+<title>添加商品</title>
+</head>
+<body>
+<div class="container">
+<form  class="form-horizontal" role="form" action=''  method='post'>
+	<input type="hidden" name="shopId"/>
+		<div class="form-group">
+			<label for="name" class="control-label col-sm-2">商品名称</label> 
+		<div class="col-sm-3">
+		<input type="text" class="form-control" id='name' name='productName' placeholder="请输入商品名称">
+		</div>	
+		</div>
+		
+		<div class="form-group">
+			<label for="type"  class="control-label col-sm-2">商品类型</label> 
+			<div class="col-sm-3">
+			<input type="text" class="form-control" id="type" name='productName' placeholder="请输入商品类型">
+			</div>
+		</div>
+
+			<div class="form-group">
+				<label for="productImg" class="control-label control-label col-sm-2">商品图片</label>
+				<div class="col-sm-3">
+					<input type="file" name="image" id="productImg"
+						placeholder="请上传商品图片">
+				</div>
+			</div>
+
+			<div class="form-group">
+			<label for="price"  class="control-label col-sm-2" placeholder="请输入原价">原价</label>
+            <div class="col-sm-3">
+                 <input type="text" id="price" name="price">
+            </div>
+		</div>
+		
+		<div class="form-group">
+				<label for="discount" class="control-label control-label col-sm-2">折扣</label>
+				<div class="col-sm-3">
+					<input type="text" id="discount" name='discount'
+					placeholder="请输入折扣（百分比）"><span>%</span>
+				</div>
+			</div>
+		
+		<button type="submit" class="btn btn-default">提交</button>
+		<button type="reset" class="btn btn-default">重置</button>
+	</form>
+</div>
+
+	
+</body>
+</html>

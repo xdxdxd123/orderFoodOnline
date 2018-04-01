@@ -62,4 +62,19 @@ private SessionFactory  sessionFactory;
 			return false;
 		}
 	}
+	@Override
+	public User checkIdentity(String username ,String password ,String userType) throws Exception {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		String sql = "select * from user_ where username_=? and password_=? and userType_=?";
+		NativeQuery<User> query = session.createNativeQuery(sql);
+		query.setParameter(1, username);
+		query.setParameter(2, password);
+		query.setParameter(3, userType);
+		List<User> list = query.list();
+		if(list.size()==1) {
+			return list.get(0);
+		}
+		return null;
+	}
 }
