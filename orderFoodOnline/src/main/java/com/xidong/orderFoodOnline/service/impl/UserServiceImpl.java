@@ -3,19 +3,39 @@ package com.xidong.orderFoodOnline.service.impl;
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
+
+import com.xidong.orderFoodOnline.dao.IShopDao;
+import com.xidong.orderFoodOnline.dao.IShoppingCartDao;
 import com.xidong.orderFoodOnline.dao.IUserDao;
+import com.xidong.orderFoodOnline.model.Shop;
+import com.xidong.orderFoodOnline.model.ShoppingCart;
 import com.xidong.orderFoodOnline.model.User;
 import com.xidong.orderFoodOnline.service.IUserService;
+import com.xidong.orderFoodOnline.util.UUIDUtil;
 
 @Service(value = "userService")
 @Transactional
 public class UserServiceImpl implements IUserService {
 	@Resource(name = "userDao")
 	private IUserDao userDao;
-
+	@Resource(name="shoppingCatrDao")
+    private IShoppingCartDao shoppingCartDao;
+	@Resource(name="shopDao")
+	private IShopDao shopDao;
 	public void addUser(User user) throws Exception {
 		// TODO Auto-generated method stub
+		user.setUserid(UUIDUtil.getUUID());
 		userDao.addUser(user);
+		//买家初始化购物车
+		if("买家".equals(user.getUsertype())){
+		ShoppingCart  shoppingCart=	new ShoppingCart();
+		shoppingCart.setUserId(user.getUserid());
+			shoppingCartDao.addShoppingCart(shoppingCart);
+		}else{   //卖家初始化店铺
+		Shop  shop=	new Shop();
+		shop.setUserid(user.getUserid());
+		shopDao.addShop(shop);
+		}	
 	}
 
 	@Override

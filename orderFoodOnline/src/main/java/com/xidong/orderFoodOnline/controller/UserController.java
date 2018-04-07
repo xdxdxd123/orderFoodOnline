@@ -48,15 +48,18 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String addUser(User user) {
+	@ResponseBody
+	public JsonVo addUser(User user) {
+	JsonVo  json=	new JsonVo();
+	json.setSuccess(false);
 		try {
 			userService.addUser(user);
-			return "user/registerSuccess";
+			json.setSuccess(true);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		return json;
 	}
 
 	/**

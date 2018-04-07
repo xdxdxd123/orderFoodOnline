@@ -3,6 +3,7 @@ package com.xidong.orderFoodOnline.dao;
 import java.util.List;
 
 import com.xidong.orderFoodOnline.model.Product;
+import com.xidong.orderFoodOnline.model.ShoppingCart;
 
 public interface IShoppingCartDao {
 	//添加商品到购物车
@@ -11,4 +12,6 @@ public interface IShoppingCartDao {
 	void delProducts(List<Product> products) throws Exception;
     //买家购物车的商品
 	List<Product> selectProducts(String  shoppingCartId,String userId)throws Exception;
+	//初始化购物车
+	void addShoppingCart(ShoppingCart  shoppingCart) throws Exception;
 }

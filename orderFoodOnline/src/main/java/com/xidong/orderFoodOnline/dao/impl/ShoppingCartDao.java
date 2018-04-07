@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.xidong.orderFoodOnline.dao.IShoppingCartDao;
 import com.xidong.orderFoodOnline.model.Product;
+import com.xidong.orderFoodOnline.model.ShoppingCart;
 
 @Repository(value="shoppingCatrDao")
 class ShoppingCartDao implements IShoppingCartDao {
@@ -32,6 +33,11 @@ sessionFactory.getCurrentSession().save(products);
 	public List<Product> selectProducts(String shoppingCartId, String userId) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	@Override
+	public void addShoppingCart(ShoppingCart shoppingCart) throws Exception {
+		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().save(shoppingCart);
 	}
 
 }
