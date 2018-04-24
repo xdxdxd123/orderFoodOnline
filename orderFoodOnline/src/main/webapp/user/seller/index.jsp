@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -23,6 +24,8 @@
 		<script src="assets/js/html5shiv.min.js"></script>
 		<script src="assets/js/respond.min.js"></script>
 		<![endif]-->
+		
+		<link rel="stylesheet" href="/orderFoodOnline/resources/plugins/bootstrap-table-v1.12.1/bootstrap-table.css"/>
 	</head>
 
 	<body class="no-skin">
@@ -42,7 +45,7 @@
 				<!-- /section:basics/sidebar.mobile.toggle -->
 				<div class="navbar-header pull-left">
 					<!-- #section:basics/navbar.layout.brand -->
-					<a href="index.html" class="navbar-brand">
+					<a href="javascript:void(0)" class="navbar-brand">
 						<small>
 							<img src="assets/avatars/logo.png" alt="" />
 						</small>
@@ -89,23 +92,6 @@
 												<span class="msg-body">
 													<span class="msg-title">
 														<span class="blue">积分商城:</span>
-														系统产生20个错误，12个警告...
-													</span>
-
-													<span class="msg-time">
-														<i class="ace-icon fa fa-clock-o"></i>
-														<span>2014-12-15 18:00:00</span>
-													</span>
-												</span>
-											</a>
-										</li>
-
-										<li>
-											<a href="#">
-												<img src="assets/avatars/avatar4.png" class="msg-photo" alt="Bob's Avatar" />
-												<span class="msg-body">
-													<span class="msg-title">
-														<span class="blue">政府机票采购:</span>
 														系统产生20个错误，12个警告...
 													</span>
 
@@ -192,8 +178,9 @@
 								<li class="divider"></li>
 
 								<li>
-									<a href="#">
+									<a href="#" id='logout'>
 										<i class="ace-icon fa fa-power-off"></i>
+										<input type="hidden" id="username"/>
 										登出
 									</a>
 								</li>
@@ -217,7 +204,7 @@
 
 				<ul class="nav nav-list">
 					<li class="active">
-						<a href="index.html">
+						<a href="javascript:void(0)">
 							<i class="menu-icon fa fa-tachometer"></i>
 							<span class="menu-text"> 店铺管理 </span>
 						</a>
@@ -235,30 +222,12 @@
 					<li class="">
 						<a href="#" id="productManage">
 							<i class="menu-icon fa fa-list"></i>
-							<span class="menu-text">商品管理</span>
+							<span class="menu-text" >商品管理</span>
+							<input type="hidden" id="userId" value="${userId}">
+							<input type="hidden" id="shopId">
 						</a>
 
 						<b class="arrow"></b>
-
-						<ul class="submenu">
-							<li class="">
-								<a href="tables.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									简单通用表格
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-							<li class="">
-								<a href="jqgrid.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									jqGrid插件表格
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-						</ul>
 					</li>
 
 					<li class="">
@@ -366,31 +335,10 @@
 
 					<!-- /section:basics/content.searchbox -->
 				</div>
-
 				<div class="page-content">
 					<!-- /section:settings.box -->
-					<div class="page-content-area">
+					<div class="page-content-area" id='pageContent'>
 
-						<div class="row">
-							<div class="col-xs-12">
-								<!-- PAGE CONTENT BEGINS -->
-								<div class="alert alert-block alert-info">
-									<button type="button" class="close" data-dismiss="alert">
-										<i class="ace-icon fa fa-times"></i>
-									</button>
-
-									<i class="ace-icon fa fa-check green"></i>
-
-									<strong class="green">某某用户，</strong>
-								        开始管理您的店铺吧
-								</div>
-								<div class="row center">
-									<img src="assets/avatars/logo_2.png" />
-								</div><!-- /.row -->
-
-								<!-- PAGE CONTENT ENDS -->
-							</div><!-- /.col -->
-						</div><!-- /.row -->
 					</div><!-- /.page-content-area -->
 				</div><!-- /.page-content -->
 			</div><!-- /.main-content -->
@@ -434,14 +382,76 @@
 		<script src="assets/js/jquery.ui.touch-punch.min.js"></script>
 		<script src="assets/js/ace-elements.min.js"></script>
 		<script src="assets/js/ace.min.js"></script>
-        
+        <script src="/orderFoodOnline/resources/plugins/bootstrap-table-v1.12.1/bootstrap-table.js"></script>
+        <script src="/orderFoodOnline/resources/plugins/bootstrap-table-v1.12.1/bootstrap-table-zh-CN.js"></script>
         <!-- 商品管理 -->
        <script  type="text/javascript">
-      function productManage(){
-    	  $("#productManage").on('click',function(){
-    		  $('').load('list.html');
+       
+       $(function(){
+    	   path=getRootPath();
+    	   getShopId();
+       });
+       
+       function loadData(){
+			var url=path+"/user/findById.do";
+			var userId=$('#userId').val();
+				$.ajax({
+					url:url,
+					data:{
+						userId:userId
+					},
+					method:'get',
+					dataType:'json',
+					success:function(data){
+						if(data){
+							$('#username').val(data.returnJson);
+							console.log($('#username').val());
+						}
+					}
+				});
+			}
+       
+       //商品列表
+       
+    	  $("#productManage").on('click',function(event){
+    		var url=path+'/product/index.do'
+    	$('#pageContent').load(url);
+    		 event.stopPropagation();  
     	  });
-      }
+      
+
+   
+   function getRootPath() {
+       var pathName = window.location.pathname.substring(1);
+       var webName = pathName == '' ? '' : pathName.substring(0, pathName.indexOf('/'));
+       if (webName == "") {
+           return window.location.protocol + '//' + window.location.host;
+       }
+       else {
+           return window.location.protocol + '//' + window.location.host + '/' + webName;
+       }
+   }
+  
+//注销
+   $('#logout').on('click',function(){
+	   var  userId=$('#userId').val();
+		  window.location.href=path+"/user/logout.do?userId="+userId;
+	   });
+   
+   //店铺id
+   function getShopId(){
+	 var url=path+"/shop/selectShopByUserId.do";
+	 $.ajax({
+		 url:url,
+		 data:{
+			 userId:'${userId}'
+		 },
+	     success:function(data){
+	    	 $('#shopId').val(data);
+	     }
+	 });
+   }
+   
        </script>
 	</body>
 </html>

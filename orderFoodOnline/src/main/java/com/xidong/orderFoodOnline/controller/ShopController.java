@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xidong.orderFoodOnline.dao.IShopDao;
 import com.xidong.orderFoodOnline.model.Shop;
@@ -43,7 +44,7 @@ public void setShopService(IShopService shopService) {
 		}
 	}
 	
-	@RequestMapping(value="selectAll",method=RequestMethod.POST)
+	@RequestMapping(value="/selectAll",method=RequestMethod.POST)
 	public List<Shop> selectAllShop(){
 		try {
 		return 	shopService.selectAllShop();
@@ -54,13 +55,14 @@ public void setShopService(IShopService shopService) {
 		return null;
 	}
 	
-	@RequestMapping(value="selectByShopUserId",method=RequestMethod.POST)
-	public void selectShop(String userId){
+	@RequestMapping(value="/selectShopByUserId")
+	public @ResponseBody String  selectShop(String userId){
 		try {
-			shopService.selectShopByUserId(userId);
+		return 	shopService.selectShopByUserId(userId).getShopId();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return null;
 	}
 }

@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -20,6 +21,7 @@
 		<script src="assets/js/html5shiv.min.js"></script>
 		<script src="assets/js/respond.min.js"></script>
 		<![endif]-->
+	</head>
 	</head>
 
 	<body class="login-layout blur-login">
@@ -48,13 +50,13 @@
 												
 												   <label class="block clearfix">
 														<span class="input-icon input-icon-right">
-									<span style="color:gray">买家</span>						<input type="radio" name="userType" value="买家" />
+															<input type="radio" name="userType" value="买家" />买家
 														</span>
 														<span class="input-icon input-icon-right">
-													<span style="color:gray">卖家</span>		<input type="radio" name="userType" value="卖家" />
+															<input type="radio" name="userType" value="卖家" />卖家
 														</span>
 														<span class=" input-icon input-icon-right">
-														<span style="color:gray">管理员</span>	<input type="radio" name="userType" value="管理员" />
+															<input type="radio" name="userType" value="管理员" />管理员
 														</span>
 													</label>
 												
@@ -255,9 +257,22 @@
 			 });
 			});
 
+		
+			
+			function getRootPath() {
+	            var pathName = window.location.pathname.substring(1);
+	            var webName = pathName == '' ? '' : pathName.substring(0, pathName.indexOf('/'));
+	            if (webName == "") {
+	                return window.location.protocol + '//' + window.location.host;
+	            }
+	            else {
+	                return window.location.protocol + '//' + window.location.host + '/' + webName;
+	            }
+	        }
+            path=getRootPath();
 			
 			function  login(){
-				var url='';
+				var url=path+'/user/login.do';
 				var form=$('#loginForm').serialize();
 				$.ajax({
 					url:url,
@@ -265,9 +280,12 @@
 					dataType:'json',
 					method:'post',
 					success:function(data){
-						if(data.success){
-							}else{
+						if(data.isSuccess){
+							window.location.href=path+data.url;
 								}
+						else{
+							alert("用户名或密码错误");
+						}
 					}
 				});
 			}

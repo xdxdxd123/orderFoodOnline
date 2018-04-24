@@ -2,6 +2,8 @@ package com.xidong.orderFoodOnline.dao;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.xidong.orderFoodOnline.model.Product;
 
 public interface IProductDao {
@@ -12,4 +14,8 @@ public interface IProductDao {
 	void delProduct(Product product) throws Exception;
 
 	List<Product> selectAllProduct(String ShopId) throws Exception;
+	
+	void addProduct(Product product,MultipartFile picture) throws Exception;
+	
+	Product selectProductById(String productId) throws Exception;
 }

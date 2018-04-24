@@ -29,11 +29,13 @@ public class UserServiceImpl implements IUserService {
 		//买家初始化购物车
 		if("买家".equals(user.getUsertype())){
 		ShoppingCart  shoppingCart=	new ShoppingCart();
+		shoppingCart.setShoppingCartId(UUIDUtil.getUUID());
 		shoppingCart.setUserId(user.getUserid());
 			shoppingCartDao.addShoppingCart(shoppingCart);
 		}else{   //卖家初始化店铺
 		Shop  shop=	new Shop();
 		shop.setUserid(user.getUserid());
+		shop.setShopId(UUIDUtil.getUUID());
 		shopDao.addShop(shop);
 		}	
 	}
@@ -60,6 +62,12 @@ public class UserServiceImpl implements IUserService {
 		} else {
 			return null;
 		}
+	}
+
+	@Override
+	public User findUserById(String userId) throws Exception {
+		// TODO Auto-generated method stub
+		return userDao.getUserById(userId);
 	}
 
 }

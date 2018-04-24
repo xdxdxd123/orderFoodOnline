@@ -21,4 +21,17 @@ public class JsonVo {
 	public void setUrl(String url) {
 		this.url = url;
 	}
+	
+	public String getMessage() {
+		return message;
+	}
+	public Object getReturnJson() {
+		return returnJson;
+	}
+	public String getUrl() {
+		return url;
+	}
+     public boolean getIsSuccess() {
+    	 return  isSuccess;
+     }
 }

@@ -5,7 +5,6 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +54,7 @@ public class UserController {
 		try {
 			userService.addUser(user);
 			json.setSuccess(true);
+			json.setUrl("index.jsp");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -72,6 +72,7 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@ResponseBody
 	public JsonVo login(HttpServletRequest request, String username, String password, String userType) {
 		JsonVo jsonVo = new JsonVo();
 		jsonVo.setSuccess(false);
@@ -83,7 +84,14 @@ public class UserController {
 					HttpSession session = request.getSession();
 					session.setAttribute("userId", user.getUserid());
 					jsonVo.setSuccess(true);
-					jsonVo.setUrl("seller/index.do");
+					if("卖家".equals(userType)) {
+						jsonVo.setUrl("/user/seller/index.do");
+					
+					}else if("买家".equals(userType)){
+						jsonVo.setUrl("/user/buyer/index.do");
+					}else {
+						
+					}
 					obj.put("userId", user.getUserid());
 					jsonVo.setReturnJson(obj);
 				}
@@ -91,11 +99,19 @@ public class UserController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
+		}  
 		return jsonVo;
 
 	}
 
+	
+	//请求登录页面
+	@RequestMapping("loginPage")
+	public  String loginPage() {
+		return "user/login2";
+	}
+	
+	
 	/**
 	 * 用户注销
 	 * 
@@ -103,14 +119,14 @@ public class UserController {
 	 * @param username
 	 * @return
 	 */
-	@RequestMapping(value = "/logout", method = RequestMethod.POST)
-	public String logout(HttpServletRequest request, String username) {
+	@RequestMapping(value = "/logout")
+	public String logout(HttpServletRequest request, String userId) {
 		HttpSession session = request.getSession();
-		if (username.equals(session.getAttribute("username"))) {
+		ModelAndView mav=new ModelAndView();
+		if (userId.equals(session.getAttribute("userId"))) {
 			session.invalidate();
-			return "index";
 		}
-		return "index";
+		return "redirect:/user/loginPage.do";
 	}
 
 	/**
@@ -153,11 +169,42 @@ public class UserController {
 		HttpSession session = request.getSession();
 		if (session.getAttribute("userId") != null && userId != null) {
 			if (userId.equals(session.getAttribute("userId"))) {
+			User user=null;
+			try {
+				user = userService.findUserById(userId);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 				mav.setViewName("user/seller/index");
+				mav.addObject("userId", userId);
+				mav.addObject("userName",user.getUsername());
 				return mav;
 			}
 		}
-		mav.setViewName("index");
 		return mav;
 	}
+	
+	@RequestMapping(value = "findById")
+	@ResponseBody
+	public JsonVo findById(String userId, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		  JsonVo  jsonVo=  new JsonVo();
+		if (session.getAttribute("userId") != null && userId != null) {
+			if (userId.equals(session.getAttribute("userId"))) {
+			User user=null;
+			try {
+				user = userService.findUserById(userId);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			  jsonVo.setReturnJson(user.getUsername());
+				return jsonVo;
+			}
+		}
+		return jsonVo;
+	}
+
 }

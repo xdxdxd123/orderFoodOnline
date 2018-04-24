@@ -10,4 +10,6 @@ public interface IUserDao {
 	boolean checkUsernameExist(String username) throws Exception;
 	
 	User  checkIdentity(String username ,String password ,String userType) throws  Exception;
+	
+	User  getUserById(String userId) throws Exception;
 }

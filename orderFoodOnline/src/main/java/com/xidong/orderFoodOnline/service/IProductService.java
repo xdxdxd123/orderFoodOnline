@@ -2,6 +2,8 @@ package com.xidong.orderFoodOnline.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.xidong.orderFoodOnline.model.Product;
 
 public interface IProductService {
@@ -13,4 +15,9 @@ public interface IProductService {
 
 	List<Product> selectAllProduct(String shopId) throws Exception;
 	
+	void addProduct(Product product,MultipartFile picture) throws Exception;
+	
+	Product selectProductById(String productId) throws Exception;
+	 
+	void modifyProduct(Product product,MultipartFile file) throws Exception;
 }

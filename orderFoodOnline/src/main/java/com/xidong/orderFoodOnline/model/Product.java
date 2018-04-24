@@ -2,7 +2,6 @@ package com.xidong.orderFoodOnline.model;
 
 
 import java.math.BigDecimal;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -23,7 +22,7 @@ public class Product implements java.io.Serializable {
 	
 	@Column(name="product_type_id_")
 	private String productTypeId;
-	
+
 	@Column(name="provenance_")
 	private String provenance;
 	
@@ -42,9 +41,32 @@ public class Product implements java.io.Serializable {
 	@Column(name="status_")
 	private String status;
 
+	//库存
+	@Column(name="stock_")
+	private int stock;
+	
 	public Product() {
 	}
+		
 	
+	
+	public Product(String productId, String productName, String shopId, String productTypeId, String provenance,
+			BigDecimal price, BigDecimal salePrice, long discount, String image, String status, int stock) {
+		this.productId = productId;
+		this.productName = productName;
+		this.shopId = shopId;
+		this.productTypeId = productTypeId;
+		this.provenance = provenance;
+		this.price = price;
+		this.salePrice = salePrice;
+		this.discount = discount;
+		this.image = image;
+		this.status = status;
+		this.stock = stock;
+	}
+
+
+
 	public String getProductId() {
 		return this.productId;
 	}
@@ -123,6 +145,13 @@ public class Product implements java.io.Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+
+	public int getStock() {
+		return stock;
 	}
 
 }

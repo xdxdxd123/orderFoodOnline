@@ -5,11 +5,10 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.NativeQuery;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import com.xidong.orderFoodOnline.dao.IShopDao;
-import com.xidong.orderFoodOnline.model.Product;
 import com.xidong.orderFoodOnline.model.Shop;
 
 @Repository(value = "shopDao")
@@ -53,8 +52,11 @@ public class ShopDaoImpl implements IShopDao {
 	
 	//卖家id查询店铺
 	public Shop selectShopByUserId(String userId){
-	Shop shop=	sessionFactory.getCurrentSession().get(Shop.class, userId);
-		return shop;
+	Session session=sessionFactory.getCurrentSession();
+	Query<Shop> query=session.createQuery("from Shop  where  userid=?");
+	query.setParameter(0, userId);
+	List<Shop> shops= query.list();
+		return shops.get(0);
 	}
 
 	@Override

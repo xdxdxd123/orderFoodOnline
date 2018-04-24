@@ -1,12 +1,14 @@
 package com.xidong.orderFoodOnline.dao.impl;
 
-import java.util.List;
 
+import java.math.BigDecimal;
+import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.NativeQuery;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 import com.xidong.orderFoodOnline.dao.IProductDao;
 import com.xidong.orderFoodOnline.model.Product;
 import com.xidong.orderFoodOnline.util.UUIDUtil;
@@ -32,7 +34,7 @@ public class ProductDaoImpl implements IProductDao {
 	public void modifyProduct(Product product) throws Exception {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.getCurrentSession();
-		session.update(product);
+		session.merge(product);
 	}
 
 	@Override
@@ -47,11 +49,25 @@ public class ProductDaoImpl implements IProductDao {
 	public List<Product> selectAllProduct(String shopId) throws Exception {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.getCurrentSession();
-		String sql = "select * from product_  where shopid_=?";
-		NativeQuery<Product> query = session.createNativeQuery(sql);
-		query.setParameter(1, shopId);
+		String sql = "select new Product( productId,  productName, shopId,  productTypeId,provenance," + 
+				"price,  salePrice,  discount,  image, status, stock) from Product where shopId=?";
+		Query<Product> query = session.createQuery(sql);
+		query.setParameter(0, shopId);
 		List<Product> products = query.list();
 		return products;
+	}
+
+	@Override
+	public void addProduct(Product product, MultipartFile picture) throws Exception {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+	}
+
+	@Override
+	public Product selectProductById(String productId) throws Exception {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		return session.get(Product.class, productId);
 	}
 
 }

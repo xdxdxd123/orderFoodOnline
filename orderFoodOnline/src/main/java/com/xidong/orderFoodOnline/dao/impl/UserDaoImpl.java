@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.NativeQuery;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import com.xidong.orderFoodOnline.dao.IUserDao;
@@ -26,7 +27,6 @@ private SessionFactory  sessionFactory;
 	public void addUser(User user) throws Exception {
 		// TODO Auto-generated method stub
 	Session  session=	sessionFactory.getCurrentSession();
-	user.setUserid(UUIDUtil.getUUID());
 	session.save(user);
 	}
 	
@@ -66,15 +66,20 @@ private SessionFactory  sessionFactory;
 	public User checkIdentity(String username ,String password ,String userType) throws Exception {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.getCurrentSession();
-		String sql = "select * from user_ where username_=? and password_=? and userType_=?";
-		NativeQuery<User> query = session.createNativeQuery(sql);
-		query.setParameter(1, username);
-		query.setParameter(2, password);
-		query.setParameter(3, userType);
+		String sql = "from User user where user.username=? and user.password=? and user.usertype=?";
+		Query<User> query = session.createQuery(sql);
+		query.setParameter(0, username);
+		query.setParameter(1, password);
+		query.setParameter(2, userType);
 		List<User> list = query.list();
 		if(list.size()==1) {
 			return list.get(0);
 		}
 		return null;
+	}
+	@Override
+	public User getUserById(String userId) throws Exception {
+		// TODO Auto-generated method stub
+		return sessionFactory.getCurrentSession().get(User.class, userId);
 	}
 }

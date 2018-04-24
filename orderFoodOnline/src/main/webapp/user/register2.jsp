@@ -1,4 +1,4 @@
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -61,7 +61,7 @@
 													
 											<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="text" class="form-control" placeholder="用户名" />
+															<input type="text" class="form-control" placeholder="用户名" name="username"/>
 														</span>
 												</label>	
 													
@@ -100,8 +100,8 @@
 															<span class="bigger-110">重置</span>
 														</button>
 
-														<button type="button" class="width-65 pull-right btn btn-sm btn-success">
-															<span class="bigger-110" onclick="register()">注册</span>
+														<button type="button" class="width-65 pull-right btn btn-sm btn-success" onclick="register()">
+															<span class="bigger-110" >注册</span>
 
 															<i class="ace-icon fa fa-arrow-right icon-on-right"></i>
 														</button>
@@ -142,6 +142,7 @@
 		<![endif]-->
 
 		<!-- inline scripts related to this page -->
+		<script type="text/javascript"></script>
 		<script type="text/javascript">
 			function  register(){
 				var url=path+'/user/register.do';
@@ -152,14 +153,16 @@
 					dataType:'json',
 					method:'post',
 					success:function(data){
-						if(data.success){
+						if(data.isSuccess){
+							alert('注册成功');
+							window.location.href=path+'/'+data.url;
 							}else{
 								}
 					}
 				});
 			}
 
-			function getRootPath_dc() {
+			function getRootPath() {
 	            var pathName = window.location.pathname.substring(1);
 	            var webName = pathName == '' ? '' : pathName.substring(0, pathName.indexOf('/'));
 	            if (webName == "") {
@@ -169,8 +172,7 @@
 	                return window.location.protocol + '//' + window.location.host + '/' + webName;
 	            }
 	        }
-            path=getRootPath_dc();
-	        console.log(path);
+            path=getRootPath();
 		</script>
 	</body>
 </html>
