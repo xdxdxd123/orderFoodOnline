@@ -1,24 +1,65 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<div>
-		<div  class="btn-group">
+	
+	<style  rel="stylesheet"  type="text/css">
+	.rowStyle{
+	height: 10px;
+	margin-bottom:20px;
+	}
+	.row1{
+	height: 200px;
+	border:1px solid #000;
+	}
+	
+	.row3{
+	
+	}
+	
+	
+	</style>
+	
+	<div class="container">
+	
+	<div class="row row1 col-xs-10" style="border:1px solid #E8E8E8;">
+	
+<form class="form-inline" role="form" id="searchForm"> 
+   <div class="form-group col-md-4"> 
+     <input type="text" class="form-control" id="name" placeholder="请输入商品名称" /> 
+    </div>
+    <div class="form-group col-md-4"> 
+     <input type="text" id="inputfile" placeholder="请选择商品类型" /> 
+    </div> 
+    <div class="form-group col-md-4"> 
+     <input type="text" id="inputfile" placeholder="请输入库存" /> 
+     
+    </div>     <button type="reset" class="btn btn-primary">重置</button> 
+    <button type="submit" class="btn btn-primary" onclick="search()">提交</button> 
+    
+   </div>
+  </form>
+	
+	<div style="margin-top: 10px;margin-bottom: 10px">
+	<div class="row rowStyle">
+			<div class="col-xs-10">
 			<button id="btn_add" type="button" class="btn btn-default btn-primary">
-				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+				<span class="glyphicon glyphicon-plus" aria-hidden="true">新增</span>
 			</button>
-			<button id="btn_edit" type="button" class="btn btn-default">
-				<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
-			</button>
-			<button id="btn_delete" type="button" class="btn btn-default">
-				<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
-			</button>
-		</div>
-		<table id="productList">
-		</table>
+			</div>
+			<div class="clearfix"></div>
 	</div>
+	</div>
+	
+	<div class="row" style="margin-top: 10px"> 
+		<div class="col-xs-10">
+		<table id="productList" class="table">
+		</table>
+		<div class="clearfix"></div>
+		</div>
+	</div>
+	</div>
+	
+
 			<script type="text/javascript">
-			
-				loadTable();
-			
 			   function loadTable(){
 			    	  $('#productList').bootstrapTable({
 			    		  url: path+'/product/list.do',         //请求后台的URL（*）
@@ -34,7 +75,8 @@
 			              minimumCountColumns: 2,             //最少允许的列数
 			              height: 700,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
 			              uniqueId: "productId",                     //每一行的唯一标识，一般为主键列
-			              columns: [
+			              showColumns:false,
+			              			              columns: [
 			              {
 			                  field: 'productId',
 			                  visible:false
@@ -68,7 +110,9 @@
 			              ],
 			    	  });
 			      }
-			
+
+			  
+			   
 			   function operateFormatter(value,row,index){
 				   return  "<a href='#' onclick=\"modifyProduct(\'"+row.productId+"\')\">修改</a>&nbsp;&nbsp;"+
 				           "<a href='#' onclick='delProduct('"+row.productId+"')'>删除</a>&nbsp;&nbsp;"+
@@ -101,16 +145,27 @@
 			 };
 			 //删除商品
 			 function delProduct(id){
-				 var url=path+"/product/del.do?id="+id;
+				 var url=path+"/product/del.do?productId="+id;
 				 $('#pageContent').load();
 			 };
 			 //上架商品
 			 function putaway(id){
-				 var url=path+"/product/addPage?id="
+				 var url=path+"/product/onSale.do?productId="+id;
 				 $('#pageContent').load();
 			 };
 			 //下架商品
 			 function putaway(id){
-				 var url=path+"/product/addPage?id="
+				 var url=path+"/product/onSale.do?productId="+id;
 			 };
+
+			 function search(){
+				 var searchForm=$('#searchForm').serialize();
+				 var url=path+"/product/list.do";
+				 var opt={
+                 url:url,
+				 query:searchForm
+			 };
+				 $("#productList").bootstrapTable('refresh', opt);
+				 }
+			 loadTable();
 			</script>

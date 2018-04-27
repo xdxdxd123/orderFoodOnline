@@ -12,12 +12,12 @@ public interface IProductService {
 	void modifyProduct(Product product) throws Exception;
 
 	void delProduct(Product product) throws Exception;
-
-	List<Product> selectAllProduct(String shopId) throws Exception;
 	
 	void addProduct(Product product,MultipartFile picture) throws Exception;
 	
 	Product selectProductById(String productId) throws Exception;
 	 
 	void modifyProduct(Product product,MultipartFile file) throws Exception;
+
+	List<Product> selectProducts(Product product) throws Exception;
 }

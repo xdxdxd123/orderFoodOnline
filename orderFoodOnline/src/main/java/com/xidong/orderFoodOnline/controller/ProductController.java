@@ -1,9 +1,17 @@
 package com.xidong.orderFoodOnline.controller;
 
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +35,13 @@ public class ProductController {
 		this.productService = productService;
 	}
 	
+	/**
+	 * 添加商品页面
+	 * @param shopId
+	 * @param model
+	 * @param productId
+	 * @return
+	 */
 	@RequestMapping(value="/addPage")
 	public  String addProductPage(String shopId,Model model,@RequestParam(required=false) String  productId) {
 	    model.addAttribute("shopId",shopId);
@@ -90,10 +105,15 @@ public 	 @ResponseBody JsonVo  modifyProduct(Product product,MultipartFile pictu
 		}
 	  }
 	
+	/**
+	 * 卖家商品列表
+	 * @param product
+	 * @return
+	 */
 	@RequestMapping(value="/list",produces="text/html;charset=UTF-8")
-	public	@ResponseBody String selectProduct(String shopId){
+	public	@ResponseBody String selectProduct(Product product){
 		  try {
-			  List <Product> list=productService.selectAllProduct(shopId);
+			  List <Product> list=productService.selectProducts(product);
 			  Map<String , Object> map=new HashMap<String , Object>();
 			  map.put("rows", list);
 			  map.put("total", list.size());
@@ -106,11 +126,17 @@ public 	 @ResponseBody JsonVo  modifyProduct(Product product,MultipartFile pictu
 		return null;
 	  }
 	
+	
 	@RequestMapping(value="/index")
 	public String listPage() {
 		return  "/product/index";
 	}
 	
+	/**
+	 * 编辑商品数据回显
+	 * @param productId
+	 * @return
+	 */
 	@RequestMapping(value="/getProduct",produces="text/html;charset=UTF-8")
 	public @ResponseBody  String getproductById(String productId) {
 		try {
@@ -130,5 +156,34 @@ if(product.getSalePrice()!=null) {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	@RequestMapping(value="/getDetail",produces="text/html;charset=UTF-8")
+	public	String getProductDetail(Product product,Model model){
+		  try {
+			  List <Product> products=productService.selectProducts(product);
+			  model.addAttribute("productList", products);
+		return	"product/list";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	  }
+	
+	@RequestMapping(value="/getImage")
+	public  void readImage(String imagePath,HttpServletResponse response){
+		try {
+		byte []	buffer=new byte[1014];
+		ServletOutputStream  out=	response.getOutputStream();
+	InputStream  is=	new FileInputStream(new File(imagePath));
+	while(is.read(buffer)!=-1){
+		out.write(buffer);
+	}
+	out.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

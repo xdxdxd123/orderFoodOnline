@@ -7,9 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.xidong.orderFoodOnline.form.Page;
+
 @Entity
 @Table(name="product_")
-public class Product implements java.io.Serializable {
+public class Product extends  Page implements java.io.Serializable {
 	@Id
 	@Column(name="product_id_")
 	private String productId;

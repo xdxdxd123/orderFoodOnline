@@ -43,8 +43,8 @@ public class ShopDaoImpl implements IShopDao {
 	public List<Shop> selectAllShop() throws Exception {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.getCurrentSession();
-		String sql = "select * from  shop_";
-		NativeQuery<Shop> query = session.createNativeQuery(sql);
+		String sql = "from  Shop";
+		Query<Shop> query = session.createQuery(sql);
 		List<Shop> shops = query.list();
 		return shops;
 	}

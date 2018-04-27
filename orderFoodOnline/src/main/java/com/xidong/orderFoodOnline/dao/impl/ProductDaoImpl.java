@@ -46,14 +46,36 @@ public class ProductDaoImpl implements IProductDao {
 	}
 
 	@Override
-	public List<Product> selectAllProduct(String shopId) throws Exception {
+	public List<Product> selectProducts(Product product) throws Exception {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.getCurrentSession();
-		String sql = "select new Product( productId,  productName, shopId,  productTypeId,provenance," + 
-				"price,  salePrice,  discount,  image, status, stock) from Product where shopId=?";
-		Query<Product> query = session.createQuery(sql);
-		query.setParameter(0, shopId);
-		List<Product> products = query.list();
+		StringBuilder sql = new  StringBuilder("select new Product( productId,  productName, shopId,  productTypeId,provenance," + 
+				"price,  salePrice,  discount,  image, status, stock) from Product where 1=1");
+		String  shopId= product.getShopId();
+		if(shopId!=null&&!"".equals(shopId)){
+			sql.append(" and shopId=:shopId");
+		}
+		String productTypeId =product.getProductTypeId();
+		if(productTypeId!=null&&!"".equals(productTypeId)){
+			sql.append(" and productTypeId=:productTypeId");
+		}
+		int stock=product.getStock();
+		
+		/*if(){
+			sql.append(" and stock=:stock");
+		}*/
+		Query<Product> query = session.createQuery(sql.toString());		
+		
+		if(!"".equals(product.getShopId())){
+		query.setParameter("shopId",product.getShopId() );
+		}
+		if(productTypeId!=null&&!"".equals(productTypeId)){
+			query.setParameter("productTypeId",productTypeId);
+		}
+	/*	if(!"".equals(product.getStock())){
+			query.setParameter("stock",product.getStock());
+			}*/
+		List<Product> products=query.list();
 		return products;
 	}
 

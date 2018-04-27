@@ -4,11 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.xidong.orderFoodOnline.dao.IShopDao;
 import com.xidong.orderFoodOnline.model.Shop;
 import com.xidong.orderFoodOnline.service.IShopService;
 
@@ -44,10 +43,12 @@ public void setShopService(IShopService shopService) {
 		}
 	}
 	
-	@RequestMapping(value="/selectAll",method=RequestMethod.POST)
-	public List<Shop> selectAllShop(){
+	@RequestMapping(value="/getShops",method=RequestMethod.GET)
+	public String  selectAllShop(Model model){
 		try {
-		return 	shopService.selectAllShop();
+		List<Shop>  shops	=shopService.selectAllShop();
+		model.addAttribute("shopList", shops);
+		return 	"shop/list";
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

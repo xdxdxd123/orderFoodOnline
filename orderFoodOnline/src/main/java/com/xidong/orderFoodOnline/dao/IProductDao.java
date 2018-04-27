@@ -13,7 +13,7 @@ public interface IProductDao {
 
 	void delProduct(Product product) throws Exception;
 
-	List<Product> selectAllProduct(String ShopId) throws Exception;
+	List<Product> selectProducts(Product product) throws Exception;
 	
 	void addProduct(Product product,MultipartFile picture) throws Exception;
 	

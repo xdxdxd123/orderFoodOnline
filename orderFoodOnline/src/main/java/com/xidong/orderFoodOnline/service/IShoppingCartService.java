@@ -2,6 +2,7 @@ package com.xidong.orderFoodOnline.service;
 
 import java.util.List;
 import com.xidong.orderFoodOnline.model.Product;
+import com.xidong.orderFoodOnline.model.ShoppingCart;
 
 public interface IShoppingCartService {
 	//添加商品到购物车
@@ -10,4 +11,6 @@ public interface IShoppingCartService {
 	void delProducts(List<Product> products) throws Exception;
     //买家购物车的商品
 	List<Product> selectProducts(String  shoppingCartId,String userId)throws Exception;
+	
+	ShoppingCart getByUserId(String userId) throws Exception;
 }

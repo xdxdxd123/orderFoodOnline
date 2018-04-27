@@ -58,4 +58,13 @@ public class ShoppingCartItem implements java.io.Serializable {
 		this.productQuantity = productQuantity;
 	}
 
+	public ShoppingCartItem(String shoppingCartItemId, String shoppingCartId, String productId, short productQuantity) {
+		this.shoppingCartItemId = shoppingCartItemId;
+		this.shoppingCartId = shoppingCartId;
+		this.productId = productId;
+		this.productQuantity = productQuantity;
+	}
+	
+	
+
 }

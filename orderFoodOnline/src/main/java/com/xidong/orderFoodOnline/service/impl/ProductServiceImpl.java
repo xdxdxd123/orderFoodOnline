@@ -44,9 +44,9 @@ productDao.addProduct(product);
 	}
 
 	@Override
-	public List<Product> selectAllProduct(String  shopId) throws Exception {
+	public List<Product> selectProducts(Product product) throws Exception {
 		// TODO Auto-generated method stub
-return  productDao.selectAllProduct(shopId);
+return  productDao.selectProducts(product);
 	}
 
 	@Override

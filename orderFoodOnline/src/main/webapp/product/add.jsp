@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-<form  class="form-horizontal" role="form" id="addProductForm"  method='post' enctype="multipart/form-data">
+<div class="container">
+<div class="row">
+	<div class="col-md-12">
+	<form  class="form-horizontal" role="form" id="addProductForm"  method='post' enctype="multipart/form-data">
 	<input type="hidden" name="shopId" value="${shopId}"/>
 	<input type='hidden' name="productId" value="${productId}"/>
 		<div class="form-group">
@@ -41,19 +43,28 @@
 		</div>
 	</div>
 
-	<div class="form-group">
-				<label for="discount" class="control-label control-label col-sm-2">折扣</label>
-				<div class="col-sm-3">
-					<input type="text" id="discount" name='discount'
-					placeholder="请输入折扣（百分比）"><span>%</span>
+				<div class="form-group">
+					<label for="discount" class="control-label control-label col-sm-2">折扣</label>
+					<div class="col-sm-3">
+						<input type="text" id="discount" name='discount'
+							placeholder="请输入折扣（百分比）"><span>%</span>
+					</div>
 				</div>
+				
+				<div class=class="form-group">
+					<button type="button" class="btn btn-default col-sm-offset-2"
+						id='addProduct'>提交</button>
+					<button type="reset" class="btn btn-default col-sm-offset-2">重置</button>
+				</div>
+
+			</form>
 	</div>
-		
-		<button type="button" class="btn btn-default col-sm-offset-2" id='addProduct'>提交</button>
-		<button type="reset" class="btn btn-default col-sm-offset-2" >重置</button>
-	</form>
-	
-	<script type="text/javascript" >
+</div>
+</div>
+
+
+
+<script type="text/javascript" >
 	var productId='${productId}';
 	$('#addProduct').on('click',function(){
 		if(productId){

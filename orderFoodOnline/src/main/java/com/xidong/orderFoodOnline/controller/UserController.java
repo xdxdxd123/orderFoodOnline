@@ -2,19 +2,18 @@ package com.xidong.orderFoodOnline.controller;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.xidong.orderFoodOnline.model.User;
+import com.xidong.orderFoodOnline.service.IShopService;
 import com.xidong.orderFoodOnline.service.IShoppingCartService;
 import com.xidong.orderFoodOnline.service.IUserService;
 import com.xidong.orderFoodOnline.util.JsonVo;
@@ -24,14 +23,10 @@ import com.xidong.orderFoodOnline.util.JsonVo;
 public class UserController {
 	@Resource(name = "userService")
 	private IUserService userService;
-
-	public IUserService getUserService() {
-		return userService;
-	}
-
-	public void setUserService(IUserService userService) {
-		this.userService = userService;
-	}
+	@Resource(name = "shopService")
+	private IShopService shopService;
+	
+	
 
 	@Autowired
 	IShoppingCartService shoppingCartService;
@@ -40,6 +35,8 @@ public class UserController {
 		this.shoppingCartService = shoppingCartService;
 	}
 
+	
+	
 	/**
 	 * 用户注册
 	 * 
@@ -105,10 +102,19 @@ public class UserController {
 	}
 
 	
-	//请求登录页面
+	
+	/**
+	 * 请求登录页面
+	 * @return
+	 */
 	@RequestMapping("loginPage")
 	public  String loginPage() {
 		return "user/login2";
+	}
+	
+	@RequestMapping("registerPage")
+	public  String registerPage() {
+		return "user/register2";
 	}
 	
 	
@@ -205,6 +211,17 @@ public class UserController {
 			}
 		}
 		return jsonVo;
+	}
+	
+	@RequestMapping(value = "buyer/index")
+	public String  userIndex(HttpServletRequest request,Model model){
+	try {
+		shopService.selectAllShop();
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+		return "index";
 	}
 
 }

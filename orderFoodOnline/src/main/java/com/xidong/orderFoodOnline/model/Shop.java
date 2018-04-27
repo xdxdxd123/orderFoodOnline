@@ -5,9 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.xidong.orderFoodOnline.form.Page;
+
 @Entity
 @Table(name = "shop_")
-public class Shop implements java.io.Serializable {
+public class Shop extends Page implements java.io.Serializable {
 	@Id
 	@Column(name = "shop_id_")
 	private String shopId;
@@ -19,7 +21,7 @@ public class Shop implements java.io.Serializable {
 	private String status;
 	@Column(name = "notice_")
 	private String notice;
-
+	
 	public Shop() {
 	}
 
