@@ -48,10 +48,7 @@
     //购物车增加或删除商品
 function operateShoppingCart(productId,flag){
 	var productCount=$('#productCount'+productId);
-	console.log(productCount);
 	var count=parseInt(productCount.val());
-	alert(productCount.val());
-	console.log("sps"+count);
 	if(flag==1){
 		count++;
 		}else{
