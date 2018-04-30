@@ -1,5 +1,6 @@
 package com.xidong.orderFoodOnline.dao.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -26,7 +27,7 @@ private SessionFactory sessionFactory;
 	public List<ShoppingCartItem> selectShoppingCartItem(String shoppingCartId) throws Exception {
 		// TODO Auto-generated method stub
 		Session session=	sessionFactory.getCurrentSession();
-		String sql="new ShoppingCartItem() form ShoppingCartItem where shoppingCartId=:shoppingCartId";
+		String sql="select new ShoppingCartItem(sci.shoppingCartItemId, sci.shoppingCartId, sci.productId,sci.productQuantity,sci.sum) from ShoppingCartItem sci where sci.shoppingCartId=:shoppingCartId";
 		Query<ShoppingCartItem> query =session.createQuery(sql);
 		query.setParameter("shoppingCartId",shoppingCartId);
 		return query.list();
@@ -50,7 +51,6 @@ private SessionFactory sessionFactory;
 	public void save(ShoppingCartItem shoppingCartItem) throws Exception {
 		// TODO Auto-generated method stub
 		Session session=	sessionFactory.getCurrentSession();
-		shoppingCartItem.setProductId(UUIDUtil.getUUID());
 		session.save(shoppingCartItem);
 	}
 
@@ -68,7 +68,7 @@ private SessionFactory sessionFactory;
 	public ShoppingCartItem findByIds(String shoppingCartId, String productId) throws Exception {
 		// TODO Auto-generated method stub
 		Session session=	sessionFactory.getCurrentSession();
-		String sql="new ShoppingCartItem(shoppingCartItemId,  shoppingCartId,  productId,  productQuantity)  from ShoppingCartItem where shoppingCartId=:shoppingCartId and  productId=:productId" ;
+		String sql="select new ShoppingCartItem(sci.shoppingCartItemId, sci.shoppingCartId, sci.productId, sci.productQuantity, sci.sum) from ShoppingCartItem  sci where  sci.shoppingCartId=:shoppingCartId and   sci.productId=:productId" ;
 		Query<ShoppingCartItem>  query=session.createQuery(sql);
 		query.setParameter("shoppingCartId",shoppingCartId);
 		query.setParameter("productId",productId);

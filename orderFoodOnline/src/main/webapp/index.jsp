@@ -156,6 +156,7 @@
 						<li class="light-blue">
 							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
 								<img class="nav-user-photo" src="assets/avatars/user.jpg" alt="Jason's Photo" />
+								<input type="hidden" id="userId" value="${userId}">
 								<span class="user-info">
 									欢迎您<br />
 									汪锡东
@@ -227,7 +228,6 @@
 						<a href="#" id="productManage">
 							<i class="menu-icon fa fa-list"></i>
 							<span class="menu-text" >商品管理</span>
-							<input type="hidden" id="userId" value="${userId}">
 							<input type="hidden" id="shopId">
 						</a>
 

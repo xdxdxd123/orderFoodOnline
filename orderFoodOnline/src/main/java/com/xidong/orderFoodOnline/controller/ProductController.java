@@ -163,6 +163,7 @@ if(product.getSalePrice()!=null) {
 		  try {
 			  List <Product> products=productService.selectProducts(product);
 			  model.addAttribute("productList", products);
+			  model.addAttribute("test", products);
 		return	"product/list";
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

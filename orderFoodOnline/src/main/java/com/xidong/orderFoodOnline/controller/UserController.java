@@ -70,7 +70,7 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
-	public JsonVo login(HttpServletRequest request, String username, String password, String userType) {
+	public JsonVo login(HttpServletRequest request, String username, String password, String userType,Model model) {
 		JsonVo jsonVo = new JsonVo();
 		jsonVo.setSuccess(false);
 		if (!"".equals(username) && !"".equals(password)) {
@@ -86,9 +86,8 @@ public class UserController {
 					
 					}else if("买家".equals(userType)){
 						jsonVo.setUrl("/user/buyer/index.do");
-					}else {
-						
 					}
+					model.addAttribute("userId", user.getUserid());
 					obj.put("userId", user.getUserid());
 					jsonVo.setReturnJson(obj);
 				}
@@ -213,7 +212,7 @@ public class UserController {
 		return jsonVo;
 	}
 	
-	@RequestMapping(value = "buyer/index")
+	@RequestMapping(value = "/buyer/index")
 	public String  userIndex(HttpServletRequest request,Model model){
 	try {
 		shopService.selectAllShop();

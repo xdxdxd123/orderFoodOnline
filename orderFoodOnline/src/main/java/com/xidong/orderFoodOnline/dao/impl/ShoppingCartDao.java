@@ -1,5 +1,7 @@
 package com.xidong.orderFoodOnline.dao.impl;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -47,10 +49,11 @@ class ShoppingCartDao implements IShoppingCartDao {
 	public ShoppingCart findByUserId(String userId) throws Exception {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.getCurrentSession();
-		String sql = "new ShoppingCart(shoppingCartId,userId) from ShoppingCart where userId=:userId";
+		String sql = "select new ShoppingCart(shoppingCartId,userId) from ShoppingCart where userId=:userId";
 		Query<ShoppingCart> query = session.createQuery(sql);
 		query.setParameter("userId", userId);
-		return query.list().get(0);
+		List<ShoppingCart> list=query.list();
+		return list.get(0);
 	}
 
 }

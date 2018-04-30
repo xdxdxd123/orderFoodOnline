@@ -2,6 +2,8 @@ package com.xidong.orderFoodOnline.service.impl;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,7 @@ import com.xidong.orderFoodOnline.model.ShoppingCart;
 import com.xidong.orderFoodOnline.service.IShoppingCartService;
 
 @Service(value="shoppingCartService")
+@Transactional
 public class ShoppingCartServiceImpl implements IShoppingCartService {
 	@Autowired
 private IShoppingCartDao shoppingCartDao;

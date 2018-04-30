@@ -1,23 +1,16 @@
 package com.xidong.orderFoodOnline.service.impl;
 
 import java.io.File;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.math.BigDecimal;
 import java.util.List;
-
 import javax.transaction.Transactional;
-
-import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.xidong.orderFoodOnline.dao.IProductDao;
 import com.xidong.orderFoodOnline.model.Product;
 import com.xidong.orderFoodOnline.service.IProductService;
 import com.xidong.orderFoodOnline.util.FileUtil;
-import com.xidong.orderFoodOnline.util.UUIDUtil;
 
 @Service(value="productService")
 @Transactional
@@ -56,6 +49,8 @@ return  productDao.selectProducts(product);
        if(filePath!=null) {
     	   product.setImage(filePath);
        }
+    product.setSalePrice( product.getPrice().multiply(new BigDecimal(new Long(product.getDiscount()).toString()).divide(new BigDecimal("100.00")))); 
+   
 		  productDao.addProduct(product);
 	}
 

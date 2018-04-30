@@ -1,6 +1,6 @@
 package com.xidong.orderFoodOnline.model;
-// default package
-// Generated 2018-2-24 19:09:30 by Hibernate Tools 3.5.0.Final
+
+import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,7 +22,11 @@ public class ShoppingCartItem implements java.io.Serializable {
 	
 	@Column(name="product_quantity_")
 	private short productQuantity;
-
+	
+	//小结
+	@Column(name="sum_")
+    private BigDecimal sum;
+	
 	public ShoppingCartItem() {
 	}
 
@@ -58,12 +62,24 @@ public class ShoppingCartItem implements java.io.Serializable {
 		this.productQuantity = productQuantity;
 	}
 
-	public ShoppingCartItem(String shoppingCartItemId, String shoppingCartId, String productId, short productQuantity) {
+	public BigDecimal getSum() {
+		return sum;
+	}
+
+	public void setSum(BigDecimal sum) {
+		this.sum = sum;
+	}
+
+	public ShoppingCartItem(String shoppingCartItemId, String shoppingCartId, String productId, short productQuantity,
+			BigDecimal sum) {
 		this.shoppingCartItemId = shoppingCartItemId;
 		this.shoppingCartId = shoppingCartId;
 		this.productId = productId;
 		this.productQuantity = productQuantity;
+		this.sum = sum;
 	}
+
+
 	
 	
 
