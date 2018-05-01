@@ -36,4 +36,11 @@ public class OrderDaoImpl implements IOrderDao {
 		return query.list();
 	}
 
+	@Override
+	public void add(Order order) throws Exception {
+		// TODO Auto-generated method stub
+		Session session=sessionFactory.getCurrentSession();
+		session.save(order);
+	}
+
 }

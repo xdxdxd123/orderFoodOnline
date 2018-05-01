@@ -163,7 +163,7 @@ if(product.getSalePrice()!=null) {
 		  try {
 			  List <Product> products=productService.selectProducts(product);
 			  model.addAttribute("productList", products);
-			  model.addAttribute("test", products);
+			  model.addAttribute("shopId", product.getShopId());
 		return	"product/list";
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -175,7 +175,7 @@ if(product.getSalePrice()!=null) {
 	@RequestMapping(value="/getImage")
 	public  void readImage(String imagePath,HttpServletResponse response){
 		try {
-		byte []	buffer=new byte[1014];
+		byte []	buffer=new byte[1024];
 		ServletOutputStream  out=	response.getOutputStream();
 	InputStream  is=	new FileInputStream(new File(imagePath));
 	while(is.read(buffer)!=-1){

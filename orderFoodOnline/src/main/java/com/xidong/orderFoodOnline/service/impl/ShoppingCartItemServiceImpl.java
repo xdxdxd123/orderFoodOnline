@@ -44,4 +44,9 @@ private IShoppingCartItemDao shoppingCartItemDao;
 		return shoppingCartItemDao.findByIds(shoppingCartId, productId);
 	}
 
+	@Override
+	public int getSum() throws Exception {
+		return shoppingCartItemDao.getSum();
+	}
+
 }

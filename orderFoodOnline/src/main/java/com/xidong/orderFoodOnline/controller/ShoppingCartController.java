@@ -76,7 +76,6 @@ public void setUserService(IUserService userService) {
 					shoppingCartItemService.update(shoppingCartItem2);
 				}
 			}else{   //删除商品
-
 					if(shoppingCartItem.getProductQuantity()==0){
 						if(shoppingCartItem2!=null){
 							shoppingCartItemService.del(shoppingCartItem2.getShoppingCartItemId());
@@ -96,7 +95,7 @@ public void setUserService(IUserService userService) {
 	
 	
 	@RequestMapping(value="goPay")
-	public  String  goPay(HttpServletRequest request,Model model,String userId){
+	public  String  goPay(HttpServletRequest request,Model model,String userId,String shopId){
 		try {
 			ShoppingCart shoppingCart =shoppingCartService.getByUserId(userId);
 		List<ShoppingCartItem>	shoppingCartItemList=shoppingCartItemService.selectShoppingCartItem(shoppingCart.getShoppingCartId());
@@ -112,6 +111,8 @@ public void setUserService(IUserService userService) {
 		model.addAttribute("shoppingCartItemList", shoppingCartItemList);
 		model.addAttribute("totalPrice", totalPrice.toString());
 		model.addAttribute("productList",productList);
+		model.addAttribute("shopId",shopId);
+		model.addAttribute("userId",userId);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

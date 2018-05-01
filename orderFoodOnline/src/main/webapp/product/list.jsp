@@ -13,7 +13,7 @@
 					
 					</div>
     <div class="col-md-12">
-    
+    <input id="shopId" value="${shopId}" type="hidden">
     <c:forEach items="${productList}" var="product">
 	<div class="col-md-3" style="height: 200px;border:1px solid #E0E0E0;margin: 5px 5px 5px 5px;">
 		<div style="margin:20px 5px 20px 5px">
@@ -43,7 +43,6 @@
 	</div>
 </c:forEach>  
     </div>
-    
     <div>
     <button class="btn btn-primary" style="float:right;" onclick="goPay()">去结算</button>
     </div>
@@ -75,14 +74,29 @@ function operateShoppingCart(productId,flag){
      "flag":flag,
      "userId":userId
          },
-     succcess:function(message){
-         }
+     succcess:function(data){
+    	 alert("");
+    	 productSum();
+         },
+     error:function(){
+    	 alert("");
+     }
 		});
 	}
+function productSum(){
+	   var url=path+'/shoppingCartItem/getSum.do';
+	   $.ajax({
+		  url:url,
+	      success:function(data){
+	    	  $('#productCount').text(data);
+	      }
+	   });
+}
     
  function goPay(){
 	 var userId=$('#userId').val();
-	 var url=path+"/shoppingCart/goPay.do?userId="+userId;
+	 var shopId=$('#shopId').val();
+	 var url=path+"/shoppingCart/goPay.do?userId="+userId+"&shopId="+shopId;
     $('#pageContent').load(url);
     }
     </script>

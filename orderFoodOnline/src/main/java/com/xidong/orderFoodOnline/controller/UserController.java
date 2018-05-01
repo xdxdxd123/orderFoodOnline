@@ -89,6 +89,7 @@ public class UserController {
 					}
 					model.addAttribute("userId", user.getUserid());
 					obj.put("userId", user.getUserid());
+					obj.put("userName", user.getUsername());
 					jsonVo.setReturnJson(obj);
 				}
 			} catch (Exception e) {

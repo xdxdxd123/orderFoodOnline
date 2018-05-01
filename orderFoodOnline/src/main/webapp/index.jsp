@@ -47,7 +47,7 @@
 					<!-- #section:basics/navbar.layout.brand -->
 					<a href="javascript:void(0)" class="navbar-brand">
 						<small>
-							<img src="assets/avatars/logo.png" alt="" />
+							在线订餐系统
 						</small>
 					</a>
 				</div>
@@ -159,7 +159,7 @@
 								<input type="hidden" id="userId" value="${userId}">
 								<span class="user-info">
 									欢迎您<br />
-									汪锡东
+									<span id="username" style="text-align:center"></span>
 								</span>
 
 								<i class="ace-icon fa fa-caret-down"></i>
@@ -167,7 +167,7 @@
 
 							<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
 								<li>
-									<a href="#">
+									<a href="#" onclick="myOrder()">
 										<i class="ace-icon fa fa-cog"></i>
 										我的订单
 									</a>
@@ -202,118 +202,6 @@
 
 		<!-- /section:basics/navbar.layout -->
 		<div class="main-container" id="main-container">
-
-			<!-- #section:basics/sidebar -->
-			<div id="sidebar" class="sidebar responsive">
-
-
-				<ul class="nav nav-list">
-					<li class="active">
-						<a href="javascript:void(0)">
-							<i class="menu-icon fa fa-tachometer"></i>
-							<span class="menu-text"> 店铺管理 </span>
-						</a>
-
-						<b class="arrow"></b>
-					</li>
-
-					<li class="">
-						<a href="#">
-							<i class="menu-icon fa fa-desktop"></i>
-							<span>订单管理</span>
-						</a>
-					</li>
-
-					<li class="">
-						<a href="#" id="productManage">
-							<i class="menu-icon fa fa-list"></i>
-							<span class="menu-text" >商品管理</span>
-							<input type="hidden" id="shopId">
-						</a>
-
-						<b class="arrow"></b>
-					</li>
-
-					<li class="">
-						<a href="#">
-							<i class="menu-icon fa fa-pencil-square-o"></i>
-							<span>交易统计</span>
-						</a>
-					</li>
-
-					<li class="">
-						<a href="#" class="dropdown-toggle">
-							<i class="menu-icon fa fa-file-o"></i>
-
-							<span class="menu-text">
-								其他页面
-
-								<!-- #section:basics/sidebar.layout.badge -->
-								<span class="badge badge-primary">5</span>
-
-								<!-- /section:basics/sidebar.layout.badge -->
-							</span>
-
-							<b class="arrow fa fa-angle-down"></b>
-						</a>
-
-						<b class="arrow"></b>
-
-						<ul class="submenu">
-							<li class="">
-								<a href="faq.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									帮助页面
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-							<li class="">
-								<a href="error-404.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									404错误页面
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-							<li class="">
-								<a href="error-500.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									500错误页面
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-							<li class="">
-								<a href="grid.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									网格
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-							<li class="">
-								<a href="blank.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									空白页面
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-						</ul>
-					</li>
-				</ul><!-- /.nav-list -->
-
-				<!-- #section:basics/sidebar.layout.minimize -->
-				<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
-					<i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
-				</div>
-
-			</div>
 
 			<!-- /section:basics/sidebar -->
 			<div class="main-content">
@@ -404,6 +292,8 @@
     	   path=getRootPath();
     	 //  getShopId();
     	   shopList();
+    	   loadData();
+    	   productSum();
        });
        
        function loadData(){
@@ -418,8 +308,7 @@
 					dataType:'json',
 					success:function(data){
 						if(data){
-							$('#username').val(data.returnJson);
-							console.log($('#username').val());
+							$('#username').text(data.returnJson);
 						}
 					}
 				});
@@ -474,6 +363,22 @@
    }
  /*   <a href="user/register2.jsp">注册</a>
    <a href="user/loginPage.do">登录</a> */
+   
+   function myOrder(){
+	   var url=path+"/order/list.do";
+	   $('#pageContent').load(url);
+   }
+   
+   //购物车商品数量
+   function productSum(){
+	   var url=path+'/shoppingCartItem/getSum.do';
+	   $.ajax({
+		  url:url,
+	      success:function(data){
+	    	  $('#productCount').text(data);
+	      }
+	   });
+   }
        </script>
        
 	</body>

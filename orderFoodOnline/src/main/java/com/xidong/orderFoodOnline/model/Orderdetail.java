@@ -1,5 +1,7 @@
 package com.xidong.orderFoodOnline.model;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -20,9 +22,26 @@ public class Orderdetail implements java.io.Serializable {
 	private String orderId;
 	@Column(name="is_deleted_")
 	private char isDeleted;
-
+	@Column(name="sum_")
+	private BigDecimal sum;
+    
 	public Orderdetail() {
 	}
+
+	
+	
+	public Orderdetail(String orderDetailId, String productId, short productQuantity, String orderId, char isDeleted,
+			BigDecimal sum) {
+		super();
+		this.orderDetailId = orderDetailId;
+		this.productId = productId;
+		this.productQuantity = productQuantity;
+		this.orderId = orderId;
+		this.isDeleted = isDeleted;
+		this.sum = sum;
+	}
+
+
 
 	public Orderdetail(String orderDetailId, String productId, short productQuantity, String orderId, char isDeleted) {
 		this.orderDetailId = orderDetailId;
@@ -71,5 +90,12 @@ public class Orderdetail implements java.io.Serializable {
 	public void setIsDeleted(char isDeleted) {
 		this.isDeleted = isDeleted;
 	}
-
+     
+	public void setSum(BigDecimal sum) {
+		this.sum = sum;
+	}
+	
+	public BigDecimal getSum() {
+		return sum;
+	}
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.xidong.orderFoodOnline.dao.IOrderDetailDao;
 import com.xidong.orderFoodOnline.model.Orderdetail;
+import com.xidong.orderFoodOnline.util.UUIDUtil;
 
 @Repository(value="orderDetailDao")
 public class OrderDetailDaoImpl implements IOrderDetailDao {
@@ -20,6 +21,7 @@ public class OrderDetailDaoImpl implements IOrderDetailDao {
 	public void add(Orderdetail orderDetail) throws Exception {
 		// TODO Auto-generated method stub
 		Session session=sessionFactory.getCurrentSession();
+		orderDetail.setOrderDetailId(UUIDUtil.getUUID());
 		session.save(orderDetail);
 	}
 
