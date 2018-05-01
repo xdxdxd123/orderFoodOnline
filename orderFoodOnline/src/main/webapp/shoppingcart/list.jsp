@@ -22,11 +22,21 @@
     </tbody>
     </table>
     <div>
-    <div style="display:inlne;">总共:${totalPrice}</div>
+    <div style="display:inlne;">总共:&yen;${totalPrice}</div>
     <button class="btn btn-primary" style="float:right" onclick="pay()">立即支付</button>
     </div>
 <script type="text/javascript">
 function pay(){
+	if(window.confirm("确定支付吗")){
+		alert("zhu");
+		var url=path+"";
+	    $.ajax({
+	    url:url,
+	    data:{
+	    	
+	    }
+	    });
+	}
 	
 }
     </script>
