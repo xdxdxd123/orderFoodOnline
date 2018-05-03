@@ -82,13 +82,19 @@ private SessionFactory sessionFactory;
 	}
 
 	@Override
-	public int getSum() throws Exception {
+	public int getSum(String shoppingCartId ) throws Exception {
 		// TODO Auto-generated method stub
 		Session session=	sessionFactory.getCurrentSession();
-		String sql="select sum(productQuantity) from ShoppingCartItem";
+		String sql="select sum(productQuantity) from ShoppingCartItem where shoppingCartId=:shoppingCartId";
 		Query<Long>  query=session.createQuery(sql);
+		query.setParameter("shoppingCartId", shoppingCartId);
 	    List<Long>  list=  query.list();
-		return (int)(list.get(0).longValue());
+	    if(list.get(0)!=null){
+	    	return (int)(list.get(0).longValue());
+	    }else {
+	    	return 0;
+	    }
+		
 	}
 
 }

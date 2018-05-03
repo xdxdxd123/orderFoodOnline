@@ -26,5 +26,5 @@ public interface IShoppingCartItemService {
 	   */
 	  ShoppingCartItem  getByIds(String shoppingCartId,String productId ) throws Exception;
 	  
-	  int getSum() throws Exception;
+	  int getSum(String shoppingCartId) throws Exception;
 }

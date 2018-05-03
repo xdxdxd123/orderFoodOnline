@@ -56,6 +56,7 @@ public void setUserService(IUserService userService) {
 	@RequestMapping(value="/operate")
  public @ResponseBody JsonVo operateShoppingCart(ShoppingCartItem shoppingCartItem,HttpServletRequest request,int flag,String userId ){
 		JsonVo json=new JsonVo();
+		
 		try {
 			ShoppingCart shoppingCart=shoppingCartService.getByUserId(userId);
 			String shoppingCartId=shoppingCart.getShoppingCartId();
@@ -86,9 +87,11 @@ public void setUserService(IUserService userService) {
 						shoppingCartItemService.update(shoppingCartItem2);
 					}
 			}
+			json.setSuccess(true);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			json.setSuccess(false);
 		}
 		return json;
 	}

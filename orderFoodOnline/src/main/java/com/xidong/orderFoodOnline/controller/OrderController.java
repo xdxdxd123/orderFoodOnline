@@ -1,9 +1,13 @@
 package com.xidong.orderFoodOnline.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.beanutils.locale.converters.DateLocaleConverter;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +20,7 @@ import com.xidong.orderFoodOnline.service.IOrderService;
 import com.xidong.orderFoodOnline.service.IShoppingCartItemService;
 import com.xidong.orderFoodOnline.util.UUIDUtil;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 @Controller
@@ -28,11 +33,16 @@ private IOrderService orderService;
 @Autowired
 private IShoppingCartItemService shoppingCartItemService;
 	
-	
+	/**
+	 * 创建订单
+	 * @param orderForm
+	 * @return
+	 */
 	@RequestMapping(value="/orderCreate")
 	public  String  orderCreate(OrderForm orderForm ){
 		Order order  =new Order();
-		order.setCreateDate(new Date());
+		Date date=new Date();
+		order.setCreateDate(getCode(orderForm.getUserId()));
 		order.setOrderTotalPrice(orderForm.getTotalPrice());
 		order.setBuyersOrderStatus("1");
 		order.setShopOrderStatus("1");
@@ -83,10 +93,10 @@ private IShoppingCartItemService shoppingCartItemService;
 			List list = null;
 			if (order.getShopId() != null) {
 				list = orderService.getOrdersByShopId(order.getShopId());
+				JSONArray.fromObject(list);
 			} else {
 				list = orderService.getOrdersByUserId(order.getUserId());
 			}
-			
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("rows", list);
 			map.put("total", list.size());
@@ -99,4 +109,8 @@ private IShoppingCartItemService shoppingCartItemService;
 		return null;
 	}
 	
+	private String  getCode (String userId){
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMddHHmmss");
+		return  DigestUtils.md5Hex(userId+sdf.format(new Date()));
+	}
 }

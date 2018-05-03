@@ -45,8 +45,8 @@ private IShoppingCartItemDao shoppingCartItemDao;
 	}
 
 	@Override
-	public int getSum() throws Exception {
-		return shoppingCartItemDao.getSum();
+	public int getSum(String shoppingCartId) throws Exception {
+		return shoppingCartItemDao.getSum(shoppingCartId);
 	}
 
 }

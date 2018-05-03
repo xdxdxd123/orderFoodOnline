@@ -20,5 +20,6 @@ public interface IShoppingCartItemDao {
   //购物车里的购物项
   ShoppingCartItem findByIds(String shoppingCartId,String productId) throws Exception;
   
-  int getSum() throws Exception;
+  //购物车商品数量
+  int getSum(String shoppingCartId) throws Exception;
 }

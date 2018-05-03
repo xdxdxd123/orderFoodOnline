@@ -27,12 +27,18 @@ public class Order implements java.io.Serializable {
 	private String status;
 	@Column(name="create_date")
 	private Date createDate;
+	@Column(name="order_code_")
+	private String orderCode;
 
 	public Order() {
 	}
 
+	
+	
+
 	public Order(String orderId, BigDecimal orderTotalPrice, String shopOrderStatus, String userId, String shopId,
-			String buyersOrderStatus, String status) {
+			String buyersOrderStatus, String status, Date createDate, String orderCode) {
+		super();
 		this.orderId = orderId;
 		this.orderTotalPrice = orderTotalPrice;
 		this.shopOrderStatus = shopOrderStatus;
@@ -40,7 +46,12 @@ public class Order implements java.io.Serializable {
 		this.shopId = shopId;
 		this.buyersOrderStatus = buyersOrderStatus;
 		this.status = status;
+		this.createDate = createDate;
+		this.orderCode = orderCode;
 	}
+
+
+
 
 	public String getOrderId() {
 		return this.orderId;
@@ -106,4 +117,11 @@ public class Order implements java.io.Serializable {
 		return createDate;
 	}
     
+    public void setOrderCode(String orderCode) {
+		this.orderCode = orderCode;
+	}
+    
+    public String getOrderCode() {
+		return orderCode;
+	}
 }

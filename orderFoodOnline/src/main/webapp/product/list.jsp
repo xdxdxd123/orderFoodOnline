@@ -68,30 +68,22 @@ function operateShoppingCart(productId,flag){
 	var url=path+"/shoppingCart/operate.do";
 	$.ajax({
      url:url,
+     type:'post',
      data:{
      "productId":productId,
      "productQuantity":count,
      "flag":flag,
      "userId":userId
          },
-     succcess:function(data){
-    	 alert("");
-    	 productSum();
+     dataType:'json',
+     success:function(data){
+     productSum();
          },
      error:function(){
-    	 alert("");
+     productSum(); 
      }
 		});
 	}
-function productSum(){
-	   var url=path+'/shoppingCartItem/getSum.do';
-	   $.ajax({
-		  url:url,
-	      success:function(data){
-	    	  $('#productCount').text(data);
-	      }
-	   });
-}
     
  function goPay(){
 	 var userId=$('#userId').val();

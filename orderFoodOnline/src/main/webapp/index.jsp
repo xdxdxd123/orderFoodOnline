@@ -24,7 +24,6 @@
 		<script src="assets/js/html5shiv.min.js"></script>
 		<script src="assets/js/respond.min.js"></script>
 		<![endif]-->
-		
 		<link rel="stylesheet" href="/orderFoodOnline/resources/plugins/bootstrap-table-v1.12.1/bootstrap-table.css"/>
 	</head>
 
@@ -371,12 +370,13 @@
    
    //购物车商品数量
    function productSum(){
-	   var url=path+'/shoppingCartItem/getSum.do';
+	   var userId=$('#userId').val();
+	   var url=path+'/shoppingCartItem/getSum.do?userId='+userId;
 	   $.ajax({
 		  url:url,
 	      success:function(data){
 	    	  $('#productCount').text(data);
-	      }
+	      },
 	   });
    }
        </script>
