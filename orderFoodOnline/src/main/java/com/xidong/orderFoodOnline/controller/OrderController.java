@@ -15,9 +15,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.xidong.orderFoodOnline.form.OrderForm;
 import com.xidong.orderFoodOnline.model.Order;
 import com.xidong.orderFoodOnline.model.Orderdetail;
+import com.xidong.orderFoodOnline.model.Shop;
+import com.xidong.orderFoodOnline.model.User;
 import com.xidong.orderFoodOnline.service.IOrderDetailService;
 import com.xidong.orderFoodOnline.service.IOrderService;
+import com.xidong.orderFoodOnline.service.IProductService;
+import com.xidong.orderFoodOnline.service.IShopService;
 import com.xidong.orderFoodOnline.service.IShoppingCartItemService;
+import com.xidong.orderFoodOnline.service.IUserService;
 import com.xidong.orderFoodOnline.util.UUIDUtil;
 
 import net.sf.json.JSONArray;
@@ -32,7 +37,13 @@ private IOrderDetailService orderDetailService;
 private IOrderService orderService;
 @Autowired
 private IShoppingCartItemService shoppingCartItemService;
-	
+@Autowired
+private IUserService userService;
+@Autowired
+private IShopService shopService;
+
+
+
 	/**
 	 * 创建订单
 	 * @param orderForm
@@ -42,7 +53,8 @@ private IShoppingCartItemService shoppingCartItemService;
 	public  String  orderCreate(OrderForm orderForm ){
 		Order order  =new Order();
 		Date date=new Date();
-		order.setCreateDate(getCode(orderForm.getUserId()));
+		order.setOrderCode(getCode(orderForm.getUserId()));
+		order.setCreateDate(date);
 		order.setOrderTotalPrice(orderForm.getTotalPrice());
 		order.setBuyersOrderStatus("1");
 		order.setShopOrderStatus("1");
@@ -87,17 +99,58 @@ private IShoppingCartItemService shoppingCartItemService;
 	 * @param product
 	 * @return
 	 */
+	/**
+	 * @param order
+	 * @return
+	 */
 	@RequestMapping(value = "/list", produces = "text/html;charset=UTF-8")
 	public @ResponseBody String selectOrders(Order order) {
 		try {
+		Map<String, Object> map = new HashMap<String, Object>();
 			List list = null;
-			if (order.getShopId() != null) {
-				list = orderService.getOrdersByShopId(order.getShopId());
-				JSONArray.fromObject(list);
-			} else {
-				list = orderService.getOrdersByUserId(order.getUserId());
+			String userId = order.getUserId();
+		    User user=userService.findUserById(userId);
+			if ("买家".equals(user.getUsertype())) {
+				list = orderService.getOrdersByUserId(userId);
+				JSONArray  array = JSONArray.fromObject(list);
+				int length=array.size();
+			for(int index=0;index<length;index++ ){
+			JSONObject  object	=array.getJSONObject(index);
+			String shopId=(String) object.get("shopId");
+			Shop shop=shopService.selectShopById(shopId);
+			object.accumulate("shopName",shop.getShopname());
+			object.accumulate("userType", 1);
+			String buyersOrderStatus=(String) object.get("buyersOrderStatus");
+			switch (buyersOrderStatus){
+		case	"1":object.replace(buyersOrderStatus,"待接单");break;
+	    case    "2":object.replace(buyersOrderStatus,"待收货");break;
+	    case    "3":object.replace(buyersOrderStatus,"确认收货");break;
+	    case    "4":object.replace(buyersOrderStatus,"已完成");break;
+	    case    "5":object.replace(buyersOrderStatus,"已取消");break;
 			}
-			Map<String, Object> map = new HashMap<String, Object>();
+			}
+			map.put("userType", 1);
+			} else if("卖家".equals(user.getUsertype())){
+				list = orderService.getOrdersByShopId(order.getShopId());
+			JSONArray  array = JSONArray.fromObject(list);
+				int length=array.size();
+			for(int index=0;index<length;index++ ){
+			JSONObject  object	=array.getJSONObject(index);
+			String userId_=(String) object.get("userId");
+			User user_=userService.findUserById(userId_);
+			object.accumulate("buyer",user_.getUsername());
+			object.accumulate("userType",2);
+			String shopOrderStatus=(String) object.get("shopOrderStatus");
+			switch (shopOrderStatus){
+		case	"1":object.replace(shopOrderStatus,"待接单");break;
+	    case    "2":object.replace(shopOrderStatus,"已发货");break;
+	    case    "3":object.replace(shopOrderStatus,"待确认收货");break;
+	    case    "4":object.replace(shopOrderStatus,"已完成");break;
+	    case    "5":object.replace(shopOrderStatus,"已取消");break;
+			}
+			}
+			
+			}
 			map.put("rows", list);
 			map.put("total", list.size());
 			JSONObject json = JSONObject.fromObject(map);
@@ -107,6 +160,11 @@ private IShoppingCartItemService shoppingCartItemService;
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	@RequestMapping(value="/listPage")
+	public  String  orderListPage(Order order){
+	return "order/index";
 	}
 	
 	private String  getCode (String userId){

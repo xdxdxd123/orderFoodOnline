@@ -35,8 +35,9 @@
     </div>     <button type="reset" class="btn btn-primary">重置</button> 
     <button type="submit" class="btn btn-primary" onclick="search()">提交</button> 
     
+   </form>
    </div>
-  </form>
+  
 	
 	<div style="margin-top: 10px;margin-bottom: 10px">
 	<div class="row rowStyle">

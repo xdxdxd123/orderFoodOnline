@@ -364,7 +364,9 @@
    <a href="user/loginPage.do">登录</a> */
    
    function myOrder(){
-	   var url=path+"/order/list.do";
+	   var userId=$('#userId').val();
+	   var shopId=$('#shopId').val();
+	   var url=path+"/order/listPage.do?userId="+userId+"&shopId="+shopId;
 	   $('#pageContent').load(url);
    }
    

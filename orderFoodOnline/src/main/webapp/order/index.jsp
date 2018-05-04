@@ -17,7 +17,7 @@
 	
 	<div class="row row1 col-xs-10" style="border:1px solid #E8E8E8;">
 	
-<form class="form-inline" role="form" id="searchForm"> 
+    <form class="form-inline" role="form" id="searchForm" action="#"> 
    <div class="form-group col-md-4"> 
      <input type="text" class="form-control" id="name" placeholder="请输入商品名称" /> 
     </div>
@@ -27,26 +27,19 @@
     <div class="form-group col-md-4"> 
      <input type="text" id="inputfile" placeholder="请输入库存" /> 
      
-    </div>     <button type="reset" class="btn btn-primary">重置</button> 
+    </div>     
+    <button type="reset" class="btn btn-primary">重置</button> 
     <button type="submit" class="btn btn-primary" onclick="search()">提交</button> 
-    
+     </form>
    </div>
-  </form>
+ 
 	
 	<div style="margin-top: 10px;margin-bottom: 10px">
-	<div class="row rowStyle">
-			<div class="col-xs-10">
-			<button id="btn_add" type="button" class="btn btn-default btn-primary">
-				<span class="glyphicon glyphicon-plus" aria-hidden="true">新增</span>
-			</button>
-			</div>
-			<div class="clearfix"></div>
-	</div>
 	</div>
 	
 	<div class="row" style="margin-top: 10px"> 
 		<div class="col-xs-10">
-		<table id="productList" class="table">
+		<table id="ordertList" class="table">
 		</table>
 		<div class="clearfix"></div>
 		</div>
@@ -56,9 +49,9 @@
 
 			<script type="text/javascript">
 			   function loadTable(){
-			    	  $('#productList').bootstrapTable({
+			    	  $('#ordertList').bootstrapTable({
 			    		  url: path+'/order/list.do',         //请求后台的URL（*）
-			              method: 'get',                      //请求方式（*）
+			              method: 'post',                      //请求方式（*）
 			              cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
 			              pagination: true,                   //是否显示分页（*）
 			              sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
@@ -86,21 +79,21 @@
 			              },{
 			                  field: 'buyer',
 			                  title: '买家',
-			                  align: 'center'
-			                  visible:false;
-			              }{
+			                  align: 'center',
+			                  visible:false
+			              },{
 			                  field: 'orderTotalPrice',
 			                  title: '订单总共支付（元）',
 			                  align: 'center'
 			              },{
 			            	  field:'buyersOrderStatus',
 			            	  title:'订单状态'
-			              }
+			              },
 			              {
 			                  field: 'operate',
 			                  title: '操作',
 			                  align: 'center',
-			                  formatter: operateFormatter //自定义方法，添加操作按钮
+			                 /*  formatter: operateFormatter */ //自定义方法，添加操作按钮
 			              },
 			              ],
 			    	  });
@@ -108,25 +101,22 @@
 
 			  
 			   
-			   function operateFormatter(value,row,index){
-				   return  "<a href='#' onclick=\"modifyProduct(\'"+row.productId+"\')\">修改</a>&nbsp;&nbsp;"+
+			  /*  function operateFormatter(value,row,index){
+				   return  "<a href='#' onclick=\"(\'"+row.productId+"\')\">修改</a>&nbsp;&nbsp;"+
 				           "<a href='#' onclick='delProduct('"+row.productId+"')'>删除</a>&nbsp;&nbsp;"+
 				           "<a href='#' onclick='putaway('"+row.productId+"')'>上架</a>&nbsp;&nbsp;"+
 				           "<a href='#' onclick='soldOut('"+row.productId+"')'>下架</a>";
-			   }
-			   
-			   $('#btn_add').on('click',function(){
-				   var shopId=$('#shopId').val();
-				   var url=path+'/product/addPage.do?shopId='+shopId;
-				   $('#pageContent').load(url);
-			   });
+			   } */
+			  
 			   
 			   var shopId=$('#shopId').val();
+			   var userId=$('#userId').val();
+			   alert(userId);
 			 //查询参数
 				 function   queryParams(params) {
-					
 					 params={
 				     shopId:shopId,
+				     userId:userId,
 				     pageNumber:1,
 				     pageSize:10
 					 }
@@ -160,7 +150,7 @@
                  url:url,
 				 query:searchForm
 			 };
-				 $("#productList").bootstrapTable('refresh', opt);
+				 $("#orderList").bootstrapTable('refresh', opt);
 				 }
 			 loadTable();
 			</script>

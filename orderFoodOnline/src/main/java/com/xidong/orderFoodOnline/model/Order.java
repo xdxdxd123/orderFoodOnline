@@ -7,9 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.xidong.orderFoodOnline.form.Page;
+
 @Entity
 @Table(name = "order_")
-public class Order implements java.io.Serializable {
+public class Order extends Page implements java.io.Serializable {
 	@Id
 	@Column(name = "order_id_")
 	private String orderId;
@@ -38,7 +40,6 @@ public class Order implements java.io.Serializable {
 
 	public Order(String orderId, BigDecimal orderTotalPrice, String shopOrderStatus, String userId, String shopId,
 			String buyersOrderStatus, String status, Date createDate, String orderCode) {
-		super();
 		this.orderId = orderId;
 		this.orderTotalPrice = orderTotalPrice;
 		this.shopOrderStatus = shopOrderStatus;
@@ -123,5 +124,6 @@ public class Order implements java.io.Serializable {
     
     public String getOrderCode() {
 		return orderCode;
-	}
+	}   
+    
 }
