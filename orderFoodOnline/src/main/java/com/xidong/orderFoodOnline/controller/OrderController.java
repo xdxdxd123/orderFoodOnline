@@ -108,11 +108,12 @@ private IShopService shopService;
 		try {
 		Map<String, Object> map = new HashMap<String, Object>();
 			List list = null;
+			JSONArray array=null;
 			String userId = order.getUserId();
 		    User user=userService.findUserById(userId);
 			if ("买家".equals(user.getUsertype())) {
 				list = orderService.getOrdersByUserId(userId);
-				JSONArray  array = JSONArray.fromObject(list);
+				 array = JSONArray.fromObject(list);
 				int length=array.size();
 			for(int index=0;index<length;index++ ){
 			JSONObject  object	=array.getJSONObject(index);
@@ -120,19 +121,21 @@ private IShopService shopService;
 			Shop shop=shopService.selectShopById(shopId);
 			object.accumulate("shopName",shop.getShopname());
 			object.accumulate("userType", 1);
+			
 			String buyersOrderStatus=(String) object.get("buyersOrderStatus");
+			object.accumulate("buyersOrderStatusValue", buyersOrderStatus);
 			switch (buyersOrderStatus){
-		case	"1":object.replace(buyersOrderStatus,"待接单");break;
-	    case    "2":object.replace(buyersOrderStatus,"待收货");break;
-	    case    "3":object.replace(buyersOrderStatus,"确认收货");break;
-	    case    "4":object.replace(buyersOrderStatus,"已完成");break;
-	    case    "5":object.replace(buyersOrderStatus,"已取消");break;
+		case	"1":object.replace("buyersOrderStatus","待卖家接单");break;
+		case	"2":object.replace("buyersOrderStatus","已接单");break;
+	    case    "3":object.replace("buyersOrderStatus","待收货");break;
+	    case    "4":object.replace("buyersOrderStatus","已完成");break;
+	    case    "5":object.replace("buyersOrderStatus","已取消");break;
 			}
 			}
 			map.put("userType", 1);
 			} else if("卖家".equals(user.getUsertype())){
 				list = orderService.getOrdersByShopId(order.getShopId());
-			JSONArray  array = JSONArray.fromObject(list);
+			    array = JSONArray.fromObject(list);
 				int length=array.size();
 			for(int index=0;index<length;index++ ){
 			JSONObject  object	=array.getJSONObject(index);
@@ -141,17 +144,18 @@ private IShopService shopService;
 			object.accumulate("buyer",user_.getUsername());
 			object.accumulate("userType",2);
 			String shopOrderStatus=(String) object.get("shopOrderStatus");
+			object.accumulate("shopOrderStatusVaulue", shopOrderStatus);
 			switch (shopOrderStatus){
 		case	"1":object.replace(shopOrderStatus,"待接单");break;
-	    case    "2":object.replace(shopOrderStatus,"已发货");break;
-	    case    "3":object.replace(shopOrderStatus,"待确认收货");break;
+		case    "2":object.replace(shopOrderStatus,"待发货");break;
+	    case    "3":object.replace(shopOrderStatus,"已发货");break;
 	    case    "4":object.replace(shopOrderStatus,"已完成");break;
 	    case    "5":object.replace(shopOrderStatus,"已取消");break;
 			}
 			}
 			
 			}
-			map.put("rows", list);
+			map.put("rows", array);
 			map.put("total", list.size());
 			JSONObject json = JSONObject.fromObject(map);
 			return json.toString();

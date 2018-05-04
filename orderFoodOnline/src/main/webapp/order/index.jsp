@@ -71,11 +71,13 @@
 			              }, {
 			                  field: 'orderCode',
 			                  title: '订单号',
-			                  align: 'center'
+			                  align: 'center',
+			                  visible:false
 			              }, {
 			                  field: 'shopName',
 			                  title: '店铺名称',
-			                  align: 'center'
+			                  align: 'center',
+			                  visible:false
 			              },{
 			                  field: 'buyer',
 			                  title: '买家',
@@ -87,9 +89,15 @@
 			                  align: 'center'
 			              },{
 			            	  field:'buyersOrderStatus',
-			            	  title:'订单状态'
-			              },
-			              {
+			            	  title:'订单状态',
+			            	  align:'center',
+			            	  visible:false
+			              },{
+			            	  field:'shopOrderStatus',
+			            	  title:'订单状态',
+			            	  align:'center',
+			            	  visible:false
+			              },{
 			                  field: 'operate',
 			                  title: '操作',
 			                  align: 'center',
@@ -101,12 +109,29 @@
 
 			  
 			   
-			  /*  function operateFormatter(value,row,index){
-				   return  "<a href='#' onclick=\"(\'"+row.productId+"\')\">修改</a>&nbsp;&nbsp;"+
-				           "<a href='#' onclick='delProduct('"+row.productId+"')'>删除</a>&nbsp;&nbsp;"+
-				           "<a href='#' onclick='putaway('"+row.productId+"')'>上架</a>&nbsp;&nbsp;"+
-				           "<a href='#' onclick='soldOut('"+row.productId+"')'>下架</a>";
-			   } */
+			    function operateFormatter(value,row,index){
+			    	if(row.userType==1){
+			    		if(buyersOrderStatusValue=='1'){
+			    			return "<a href='#' onclick='modifyOrderStatus('"+row.orderId+","+"6"+","+"5"+"')'>取消</a>";
+			    		}
+			    		else if(buyersOrderStatusValue=='3'){
+			    			return  "<a href='#' onclick='modifyOrderStatus('"+row.orderId+","+"4"+","+"4"+"')'>确认收货</a>";
+			    		} else {
+			    			return "";
+			    		}
+			    		
+			    	}else{
+			    		if(shopOrderStatusValue=='1'){	    			
+			    			   return "<a href='#' onclick='modify(\'"+row.orderId+","+"2"+","+"2"+"\')\">接单</a>&nbsp;&nbsp;" +
+					           "<a href='#' onclick='modifyOrderStatus('"+row.orderId+","+"6"+","+"6"+"')'>取消</a>&nbsp;&nbsp;";
+			    		}else if(shopOrderStatusValue=='2'){
+			    			return "<a href='#' onclick='modifyOrderStatus(\'"row.orderId+","+"3"+","+"3"+"\')\">发货</a>"
+			    		}else{
+			    			return "";
+			    		}
+			    	}
+				   
+			   }
 			  
 			   
 			   var shopId=$('#shopId').val();
@@ -153,4 +178,20 @@
 				 $("#orderList").bootstrapTable('refresh', opt);
 				 }
 			 loadTable();
+			 
+			 function modifyOrderStatus(orderId,buyersOrderStatus,shopOrderStatus){
+				 var url=path+"order/list.do";
+				 $.ajax({
+					 url:url,
+					 data:{
+						 orderId:orderId,
+						 buyersOrderStatus:buyersOrderStatus,
+						 shopOrderStatus:shopOrderStatus
+					 },
+					 type:'post',
+					 success:function(){
+						 loadTable();
+					 }
+				 });
+			 }
 			</script>
