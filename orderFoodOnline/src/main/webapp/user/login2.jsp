@@ -55,9 +55,6 @@
 														<span class="input-icon input-icon-right">
 															<input type="radio" name="userType" value="卖家" />卖家
 														</span>
-														<span class=" input-icon input-icon-right">
-															<input type="radio" name="userType" value="管理员" />管理员
-														</span>
 													</label>
 												
 													<label class="block clearfix">

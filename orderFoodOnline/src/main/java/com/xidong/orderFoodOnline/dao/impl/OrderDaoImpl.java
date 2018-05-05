@@ -1,7 +1,5 @@
 package com.xidong.orderFoodOnline.dao.impl;
 
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -21,8 +19,8 @@ public class OrderDaoImpl implements IOrderDao {
 	public List<Order> getOrdersByUserId(String userId) throws Exception {
 		// TODO Auto-generated method stub
 		Session session=sessionFactory.getCurrentSession();
-		String sql="select new com.xidong.orderFoodOnline.model.Order(order.orderId,order.orderTotalPrice,order.shopOrderStatus,order.userId,order.shopId,order.buyersOrderStatus,order.status,order.createDate,order.orderCode) from  Order order  where  order.userId=:userId";
-		Query query  =session.createQuery(sql);
+		String hql="select new com.xidong.orderFoodOnline.model.Order(order.orderId,order.orderTotalPrice,order.shopOrderStatus,order.userId,order.shopId,order.buyersOrderStatus,order.status,order.createDate,order.orderCode) from  Order order  where  order.userId=:userId";
+		Query query  =session.createQuery(hql);
 		query.setParameter("userId", userId);
 		return query.list();
 	}
@@ -30,9 +28,9 @@ public class OrderDaoImpl implements IOrderDao {
 	@Override
 	public List<Order> getOrdersByShopId(String shopId) throws Exception {
 		Session session=sessionFactory.getCurrentSession();
-		String sql="select new com.xidong.orderFoodOnline.model.Order(order.orderId, order.orderTotalPrice, order.shopOrderStatus, order.userId, order.shopId,"+
+		String hql="select new com.xidong.orderFoodOnline.model.Order(order.orderId, order.orderTotalPrice, order.shopOrderStatus, order.userId, order.shopId,"+
 			 "order.buyersOrderStatus, order.status, order.createDate, order.orderCode) from Order order where  order.shopId=:shopId";
-		Query query  =session.createQuery(sql);
+		Query query  =session.createQuery(hql);
 		query.setParameter("shopId", shopId);
 		return query.list();
 	}

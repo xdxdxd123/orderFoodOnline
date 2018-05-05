@@ -59,94 +59,8 @@
 						<li class="green">
 							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
 								<i class="glyphicon glyphicon-shopping-cart"></i>
-								<span class="badge badge-success" id="productCount">5</span>
+								<span class="badge badge-success" id="productCount"></span>
 							</a>
-
-							<ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
-								<li class="dropdown-header">
-									<i class="ace-icon fa fa-envelope-o"></i>
-									13条未读信息
-								</li>
-
-								<li class="dropdown-content">
-									<ul class="dropdown-menu dropdown-navbar">
-										<li>
-											<a href="#">
-												<img src="assets/avatars/avatar.png" class="msg-photo" alt="Alex's Avatar" />
-												<span class="msg-body">
-													<span class="msg-title">
-														<span class="blue">B2C:</span>
-														系统产生20个错误，12个警告...
-													</span>
-
-													<span class="msg-time">
-														<i class="ace-icon fa fa-clock-o"></i>
-														<span>2014-12-15 18:00:00</span>
-													</span>
-												</span>
-											</a>
-										</li>
-
-										<li>
-											<a href="#">
-												<img src="assets/avatars/avatar3.png" class="msg-photo" alt="Susan's Avatar" />
-												<span class="msg-body">
-													<span class="msg-title">
-														<span class="blue">积分商城:</span>
-														系统产生20个错误，12个警告...
-													</span>
-
-													<span class="msg-time">
-														<i class="ace-icon fa fa-clock-o"></i>
-														<span>2014-12-15 18:00:00</span>
-													</span>
-												</span>
-											</a>
-										</li>
-
-										<li>
-											<a href="#">
-												<img src="assets/avatars/avatar2.png" class="msg-photo" alt="Kate's Avatar" />
-												<span class="msg-body">
-													<span class="msg-title">
-														<span class="blue">B2B:</span>
-														系统产生20个错误，12个警告...
-													</span>
-
-													<span class="msg-time">
-														<i class="ace-icon fa fa-clock-o"></i>
-														<span>2014-12-15 18:00:00</span>
-													</span>
-												</span>
-											</a>
-										</li>
-
-										<li>
-											<a href="#">
-												<img src="assets/avatars/avatar5.png" class="msg-photo" alt="Fred's Avatar" />
-												<span class="msg-body">
-													<span class="msg-title">
-														<span class="blue">货运系统:</span>
-														系统产生20个错误，12个警告...
-													</span>
-
-													<span class="msg-time">
-														<i class="ace-icon fa fa-clock-o"></i>
-														<span>2014-12-15 18:00:00</span>
-													</span>
-												</span>
-											</a>
-										</li>
-									</ul>
-								</li>
-
-								<li class="dropdown-footer">
-									<a href="inbox.html">
-										查看全部消息
-										<i class="ace-icon fa fa-arrow-right"></i>
-									</a>
-								</li>
-							</ul>
 						</li>
 
 
@@ -173,7 +87,7 @@
 								</li>
 
 								<li>
-									<a href="profile.html">
+									<a href="#" onclick="userInfoSetting()">
 										<i class="ace-icon fa fa-user"></i>
 										个人信息设置
 									</a>
@@ -209,7 +123,7 @@
 					<ul class="breadcrumb">
 						<li>
 							<i class="ace-icon fa fa-home home-icon"></i>
-							<a href="index.html">店铺列表</a>
+							<a href="#" onclick="">店铺列表</a>
 						</li>
 					</ul><!-- /.breadcrumb -->
 
@@ -312,14 +226,6 @@
 					}
 				});
 			}
-       
-       //商品列表
-       
-    	  $("#productManage").on('click',function(event){
-    		var url=path+'/product/index.do'
-    	$('#pageContent').load(url);
-    		 event.stopPropagation();  
-    	  });
       
 
    
@@ -381,6 +287,16 @@
 	      },
 	   });
    }
+   
+   //店铺页面
+   function get(){
+	   
+   }
+   
+   funciton userInfoSetting(){
+	 $('#')
+   }
+   
        </script>
        
 	</body>

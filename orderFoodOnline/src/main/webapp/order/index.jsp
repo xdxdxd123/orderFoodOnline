@@ -11,13 +11,17 @@
 	border:1px solid #000;
 	}
 	
+	div{
+    margin:0 auto;	
+	}
 	</style>
 	
 	<div class="container">
 	
-	<div class="row row1 col-xs-10" style="border:1px solid #E8E8E8;">
+	<div class="row" style="border:1px solid #E8E8E8;">
 	
-    <form class="form-inline" role="form" id="searchForm" action="#"> 
+	<div>
+	<form class="form-inline" role="form" id="searchForm" action="#"> 
    <div class="form-group col-md-4"> 
      <input type="text" class="form-control" id="name" placeholder="请输入商品名称" /> 
     </div>
@@ -31,18 +35,17 @@
     <button type="reset" class="btn btn-primary">重置</button> 
     <button type="submit" class="btn btn-primary" onclick="search()">提交</button> 
      </form>
+	</div>
+	
+    
    </div>
  
 	
 	<div style="margin-top: 10px;margin-bottom: 10px">
 	</div>
 	
-	<div class="row" style="margin-top: 10px"> 
-		<div class="col-xs-10">
-		<table id="ordertList" class="table">
-		</table>
-		<div class="clearfix"></div>
-		</div>
+	<div style="margin-top: 10px"> 
+		<table id="ordertList" class="table"></table>
 	</div>
 	</div>
 	
@@ -64,7 +67,7 @@
 			              height: 700,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
 			              uniqueId: "orderId",                     //每一行的唯一标识，一般为主键列
 			              showColumns:false,
-			              			              columns: [
+			           columns: [
 			              {
 			                  field: 'orderId',
 			                  visible:false
@@ -101,7 +104,7 @@
 			                  title: '操作',
 			                  align: 'center',
 			                  formatter: operateFormatter  //添加操作
-			              },
+			              }
 			              ],
 			              onLoadSuccess:function(data){
 			            	  if(data.userType==1){
@@ -157,6 +160,10 @@
 
 			 function reloadTableData(){
 				 
+				 var opt={
+		                 url:url,
+					 };
+				 $("#orderList").bootstrapTable('refresh', opt);
 			 }
 			 
 			 function search(){
@@ -182,8 +189,7 @@
 					 },
 					 type:'post',
 					 success:function(){
-						 alert("");
-						 loadTable();
+						 reloadTableData();
 					 }
 				 });
 			 }
