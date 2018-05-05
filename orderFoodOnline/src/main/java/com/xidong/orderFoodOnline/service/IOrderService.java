@@ -15,4 +15,6 @@ public interface IOrderService {
  void add(Order order) throws Exception;
  
  void modify(Orderdetail orderDetail) throws Exception;
+ 
+ void update(Order order) throws Exception;
 }

@@ -40,4 +40,10 @@ private IOrderDao orderDao;
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void update(Order order) throws Exception {
+		// TODO Auto-generated method stub
+		orderDao.update(order);
+	}
 }

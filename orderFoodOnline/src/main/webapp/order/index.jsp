@@ -72,7 +72,6 @@
 			                  field: 'orderCode',
 			                  title: '订单号',
 			                  align: 'center',
-			                  visible:false
 			              }, {
 			                  field: 'shopName',
 			                  title: '店铺名称',
@@ -101,9 +100,18 @@
 			                  field: 'operate',
 			                  title: '操作',
 			                  align: 'center',
-			                 /*  formatter: operateFormatter */ //自定义方法，添加操作按钮
+			                  formatter: operateFormatter  //添加操作
 			              },
 			              ],
+			              onLoadSuccess:function(data){
+			            	  if(data.userType==1){
+			            		  $('#ordertList').bootstrapTable('showColumn', "buyersOrderStatus");
+						    	  $('#ordertList').bootstrapTable('showColumn', "shopName");
+			            	  }else{
+			            		  $('#ordertList').bootstrapTable('showColumn', "shopOrderStatus");
+						    	  $('#ordertList').bootstrapTable('showColumn', "buyer");
+			            	  }
+			              }
 			    	  });
 			      }
 
@@ -111,21 +119,21 @@
 			   
 			    function operateFormatter(value,row,index){
 			    	if(row.userType==1){
-			    		if(buyersOrderStatusValue=='1'){
-			    			return "<a href='#' onclick='modifyOrderStatus('"+row.orderId+","+"6"+","+"5"+"')'>取消</a>";
+			    		if(row.buyersOrderStatusValue=='1'){
+			    			return "<a href=\'#\' onclick=\"modifyOrderStatus(\'"+row.orderId+"\',"+"\'5\'"+","+"\'5"+"')\">取消</a>";
 			    		}
-			    		else if(buyersOrderStatusValue=='3'){
-			    			return  "<a href='#' onclick='modifyOrderStatus('"+row.orderId+","+"4"+","+"4"+"')'>确认收货</a>";
+			    		else if(row.buyersOrderStatusValue=='3'){
+			    			return  "<a href=\'#\' onclick=\"modifyOrderStatus(\'"+row.orderId+"\',"+"\'4\'"+","+"\'4"+"')\">确认收货</a>";
 			    		} else {
 			    			return "";
 			    		}
 			    		
 			    	}else{
-			    		if(shopOrderStatusValue=='1'){	    			
-			    			   return "<a href='#' onclick='modify(\'"+row.orderId+","+"2"+","+"2"+"\')\">接单</a>&nbsp;&nbsp;" +
-					           "<a href='#' onclick='modifyOrderStatus('"+row.orderId+","+"6"+","+"6"+"')'>取消</a>&nbsp;&nbsp;";
-			    		}else if(shopOrderStatusValue=='2'){
-			    			return "<a href='#' onclick='modifyOrderStatus(\'"row.orderId+","+"3"+","+"3"+"\')\">发货</a>"
+			    		if(row.shopOrderStatusValue=='1'){	
+			    			   return "<a href=\'#\' onclick=\"modifyOrderStatus(\'"+row.orderId+"\',"+"\'2\'"+","+"\'2"+"')\">接单</a>&nbsp;&nbsp;" +
+					           "<a href=\'#\' onclick=\"modifyOrderStatus(\'"+row.orderId+"\',"+"\'5\'"+","+"\'5"+"')\">取消</a>";
+			    		}else if(row.shopOrderStatusValue=='2'){
+			    			return "<a \'#\' onclick=\"modifyOrderStatus(\'"+row.orderId+"\',"+"\'3\'"+","+"\'3"+"')\">发货</a>"
 			    		}else{
 			    			return "";
 			    		}
@@ -136,7 +144,6 @@
 			   
 			   var shopId=$('#shopId').val();
 			   var userId=$('#userId').val();
-			   alert(userId);
 			 //查询参数
 				 function   queryParams(params) {
 					 params={
@@ -147,27 +154,11 @@
 					 }
 					return params;
 				}
-			 
-			 //修改商品
-			 function modifyProduct(id){
-				 var url=path+"/product/addPage.do?productId="+id+"&shopId="+shopId;
-				 $('#pageContent').load(url);
-			 };
-			 //删除商品
-			 function delProduct(id){
-				 var url=path+"/product/del.do?productId="+id;
-				 $('#pageContent').load();
-			 };
-			 //上架商品
-			 function putaway(id){
-				 var url=path+"/product/onSale.do?productId="+id;
-				 $('#pageContent').load();
-			 };
-			 //下架商品
-			 function putaway(id){
-				 var url=path+"/product/onSale.do?productId="+id;
-			 };
 
+			 function reloadTableData(){
+				 
+			 }
+			 
 			 function search(){
 				 var searchForm=$('#searchForm').serialize();
 				 var url=path+"/product/list.do";
@@ -177,10 +168,11 @@
 			 };
 				 $("#orderList").bootstrapTable('refresh', opt);
 				 }
-			 loadTable();
 			 
+			 loadTable();
 			 function modifyOrderStatus(orderId,buyersOrderStatus,shopOrderStatus){
-				 var url=path+"order/list.do";
+				 alert('');
+				 var url=path+"/order/update.do";
 				 $.ajax({
 					 url:url,
 					 data:{
@@ -190,6 +182,7 @@
 					 },
 					 type:'post',
 					 success:function(){
+						 alert("");
 						 loadTable();
 					 }
 				 });

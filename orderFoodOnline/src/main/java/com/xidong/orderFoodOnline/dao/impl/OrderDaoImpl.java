@@ -30,8 +30,8 @@ public class OrderDaoImpl implements IOrderDao {
 	@Override
 	public List<Order> getOrdersByShopId(String shopId) throws Exception {
 		Session session=sessionFactory.getCurrentSession();
-		String sql="select new Order(orderId, orderTotalPrice, shopOrderStatus, userId, shopId,"+
-			 "buyersOrderStatus, status, createDate, orderCode) from Order  where  shopId=:shopId";
+		String sql="select new com.xidong.orderFoodOnline.model.Order(order.orderId, order.orderTotalPrice, order.shopOrderStatus, order.userId, order.shopId,"+
+			 "order.buyersOrderStatus, order.status, order.createDate, order.orderCode) from Order order where  order.shopId=:shopId";
 		Query query  =session.createQuery(sql);
 		query.setParameter("shopId", shopId);
 		return query.list();
@@ -42,6 +42,16 @@ public class OrderDaoImpl implements IOrderDao {
 		// TODO Auto-generated method stub
 		Session session=sessionFactory.getCurrentSession();
 		session.save(order);
+	}
+
+	@Override
+	public void update(Order order) throws Exception {
+		// TODO Auto-generated method stub
+		Session session=sessionFactory.getCurrentSession();
+		Order order_=session.load(Order.class, order.getOrderId());
+		order_.setBuyersOrderStatus(order.getBuyersOrderStatus());
+		order_.setShopOrderStatus(order.getShopOrderStatus());
+		session.update(order_);
 	}
 
 }

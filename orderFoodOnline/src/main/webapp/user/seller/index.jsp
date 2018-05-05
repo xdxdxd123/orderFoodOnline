@@ -47,7 +47,7 @@
 					<!-- #section:basics/navbar.layout.brand -->
 					<a href="javascript:void(0)" class="navbar-brand">
 						<small>
-							<img src="assets/avatars/logo.png" alt="" />
+							在线订餐系统
 						</small>
 					</a>
 				</div>
@@ -213,7 +213,7 @@
 					</li>
 
 					<li class="">
-						<a href="#">
+						<a href="#" onclick="orderManage()">
 							<i class="menu-icon fa fa-desktop"></i>
 							<span>订单管理</span>
 						</a>
@@ -452,6 +452,12 @@
 	 });
    }
    
+   function orderManage(){
+	   var userId=$('#userId').val();
+	   var shopId=$('#shopId').val();
+	   var url=path+"/order/listPage.do";
+	   $('#pageContent').load(url);
+   }
        </script>
 	</body>
 </html>

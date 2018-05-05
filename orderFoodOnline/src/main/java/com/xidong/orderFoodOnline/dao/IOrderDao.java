@@ -12,4 +12,6 @@ public interface IOrderDao {
  List<Order> getOrdersByShopId(String shopId) throws Exception;
  
  void add(Order order) throws Exception;
+ 
+ void update(Order order) throws Exception;
 }

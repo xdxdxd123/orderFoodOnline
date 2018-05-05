@@ -144,13 +144,16 @@ private IShopService shopService;
 			object.accumulate("buyer",user_.getUsername());
 			object.accumulate("userType",2);
 			String shopOrderStatus=(String) object.get("shopOrderStatus");
-			object.accumulate("shopOrderStatusVaulue", shopOrderStatus);
+			object.accumulate("shopOrderStatusValue", shopOrderStatus);
 			switch (shopOrderStatus){
-		case	"1":object.replace(shopOrderStatus,"待接单");break;
-		case    "2":object.replace(shopOrderStatus,"待发货");break;
-	    case    "3":object.replace(shopOrderStatus,"已发货");break;
-	    case    "4":object.replace(shopOrderStatus,"已完成");break;
-	    case    "5":object.replace(shopOrderStatus,"已取消");break;
+		case	"1":
+			object.replace("shopOrderStatus","待接单");
+		System.out.println(object);
+		break;
+		case    "2":object.replace("shopOrderStatus","待发货");break;
+	    case    "3":object.replace("shopOrderStatus","已发货");break;
+	    case    "4":object.replace("shopOrderStatus","已完成");break;
+	    case    "5":object.replace("shopOrderStatus","已取消");break;
 			}
 			}
 			
@@ -166,6 +169,7 @@ private IShopService shopService;
 		return null;
 	}
 	
+	//订单列表
 	@RequestMapping(value="/listPage")
 	public  String  orderListPage(Order order){
 	return "order/index";
@@ -175,4 +179,21 @@ private IShopService shopService;
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMddHHmmss");
 		return  DigestUtils.md5Hex(userId+sdf.format(new Date()));
 	}
+	
+	//更新订单状态
+	/**
+	 * @param order
+	 * @return
+	 */
+	@RequestMapping(value="/update")
+	public @ResponseBody String updateOrder(Order order){
+		try {
+			orderService.update(order);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 }
