@@ -12,4 +12,6 @@ public interface IUserDao {
 	User  checkIdentity(String username ,String password ,String userType) throws  Exception;
 	
 	User  getUserById(String userId) throws Exception;
+	
+	void modify(User user)  throws Exception;
 }

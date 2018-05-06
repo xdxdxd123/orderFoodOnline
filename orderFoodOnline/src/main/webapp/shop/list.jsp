@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
-    <div class="col-md-12"></div>
+    <div class="col-md-12">
     <c:forEach items="${shopList}" var="shop">  
         <div class="col-md-2" style="height:250px">  
         <input type="hidden" value="${shop.shopId}">
@@ -16,7 +16,7 @@
         </p>
         </div>  
     </c:forEach>  
-    
+    </div>
     <script>
 function visitShop(shopId){
 	var url=path+"/product/getDetail.do?shopId="+shopId;

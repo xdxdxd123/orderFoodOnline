@@ -54,6 +54,6 @@
  </servlet-mapping>
  
  <welcome-file-list>
- <welcome-file>user/login2.jsp</welcome-file>
+ <welcome-file>user/login.jsp</welcome-file>
  </welcome-file-list>
 </web-app>

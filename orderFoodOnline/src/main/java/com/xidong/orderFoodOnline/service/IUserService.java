@@ -14,4 +14,6 @@ public interface IUserService {
 	User  checkIdentity(String username ,String password ,String userType ) throws Exception;
 	 
 	User  findUserById(String userId) throws Exception;
+	
+	void modify(User user)  throws Exception;
 }

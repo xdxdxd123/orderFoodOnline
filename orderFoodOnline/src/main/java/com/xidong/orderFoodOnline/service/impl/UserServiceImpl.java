@@ -69,4 +69,10 @@ public class UserServiceImpl implements IUserService {
 		return userDao.getUserById(userId);
 	}
 
+	@Override
+	public void modify(User user) throws Exception {
+		// TODO Auto-generated method stub
+		userDao.modify(user);
+	}
+
 }

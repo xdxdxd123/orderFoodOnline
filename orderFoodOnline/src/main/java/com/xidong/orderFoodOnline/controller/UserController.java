@@ -51,7 +51,7 @@ public class UserController {
 		try {
 			userService.addUser(user);
 			json.setSuccess(true);
-			json.setUrl("index.jsp");
+			json.setUrl("user/login.jsp");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -109,12 +109,12 @@ public class UserController {
 	 */
 	@RequestMapping("loginPage")
 	public  String loginPage() {
-		return "user/login2";
+		return "user/login";
 	}
 	
 	@RequestMapping("registerPage")
 	public  String registerPage() {
-		return "user/register2";
+		return "user/register";
 	}
 	
 	
@@ -215,13 +215,11 @@ public class UserController {
 	
 	@RequestMapping(value = "/buyer/index")
 	public String  userIndex(HttpServletRequest request,Model model){
-	try {
-		shopService.selectAllShop();
-	} catch (Exception e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
 		return "index";
 	}
 
+	@RequestMapping(value="/userInfoPage")
+	public String modifyUserInfoPage(User user){
+		 return  "user/buyer/edit";
+	}
 }

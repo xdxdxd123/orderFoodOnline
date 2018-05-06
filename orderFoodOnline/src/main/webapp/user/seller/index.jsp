@@ -212,14 +212,14 @@
 						<b class="arrow"></b>
 					</li>
 
-					<li class="">
+					<li >
 						<a href="#" onclick="orderManage()">
-							<i class="menu-icon fa fa-desktop"></i>
+							<i class="menu-icon fa fa-list"></i>
 							<span>订单管理</span>
 						</a>
 					</li>
 
-					<li class="">
+					<li >
 						<a href="#" id="productManage">
 							<i class="menu-icon fa fa-list"></i>
 							<span class="menu-text" >商品管理</span>
@@ -230,85 +230,13 @@
 						<b class="arrow"></b>
 					</li>
 
-					<li class="">
+					<li >
 						<a href="#">
-							<i class="menu-icon fa fa-pencil-square-o"></i>
-							<span>交易统计</span>
+							<i class="menu-icon fa fa-list"></i>
+							<span>商品类型管理</span>
 						</a>
-					</li>
-
-					<li class="">
-						<a href="#" class="dropdown-toggle">
-							<i class="menu-icon fa fa-file-o"></i>
-
-							<span class="menu-text">
-								其他页面
-
-								<!-- #section:basics/sidebar.layout.badge -->
-								<span class="badge badge-primary">5</span>
-
-								<!-- /section:basics/sidebar.layout.badge -->
-							</span>
-
-							<b class="arrow fa fa-angle-down"></b>
-						</a>
-
-						<b class="arrow"></b>
-
-						<ul class="submenu">
-							<li class="">
-								<a href="faq.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									帮助页面
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-							<li class="">
-								<a href="error-404.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									404错误页面
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-							<li class="">
-								<a href="error-500.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									500错误页面
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-							<li class="">
-								<a href="grid.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									网格
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-							<li class="">
-								<a href="blank.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									空白页面
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-						</ul>
 					</li>
 				</ul><!-- /.nav-list -->
-
-				<!-- #section:basics/sidebar.layout.minimize -->
-				<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
-					<i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
-				</div>
-
 			</div>
 
 			<!-- /section:basics/sidebar -->
@@ -359,7 +287,9 @@
 			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
 				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
 			</a>
-		</div><!-- /.main-container -->
+		</div>
+		
+		<!-- /.main-container -->
 
 		<!--[if !IE]> -->
 			<script type="text/javascript">

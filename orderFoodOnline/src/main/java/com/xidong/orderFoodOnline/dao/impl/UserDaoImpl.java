@@ -82,4 +82,9 @@ private SessionFactory  sessionFactory;
 		// TODO Auto-generated method stub
 		return sessionFactory.getCurrentSession().get(User.class, userId);
 	}
+	@Override
+	public void modify(User user) throws Exception {
+		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().update(user);
+	}
 }

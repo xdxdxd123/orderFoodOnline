@@ -123,7 +123,7 @@
 					<ul class="breadcrumb">
 						<li>
 							<i class="ace-icon fa fa-home home-icon"></i>
-							<a href="#" onclick="">店铺列表</a>
+							<a href="#" onclick="goIndex()">店铺列表</a>
 						</li>
 					</ul><!-- /.breadcrumb -->
 
@@ -141,7 +141,7 @@
 					<div  style="margin: 20px 100px 20px 100px">
 					<form class="form-search">
 							<span class="input-icon">
-								<input type="text" placeholder=" 商品/店铺" class="nav-search-input" id="nav-search-input" autocomplete="off" />
+								<input type="text" placeholder=" 店铺" class="nav-search-input" id="nav-search-input" autocomplete="off" />
 								<i class="ace-icon fa fa-search nav-search-icon"></i>
 							</span>
 							<span   class="input-icon btn btn-primary">搜索</span>
@@ -266,8 +266,6 @@
 	  var  url=path+"/shop/getShops.do"; 
 	   $('#shops').load(url);
    }
- /*   <a href="user/register2.jsp">注册</a>
-   <a href="user/loginPage.do">登录</a> */
    
    function myOrder(){
 	   var userId=$('#userId').val();
@@ -288,15 +286,19 @@
 	   });
    }
    
-   //店铺页面
-   function get(){
-	   
+   //店铺列表页面
+   function goIndex(){
+	   var url=path+"/user/buyer/index.do";
+	   $('#main-container').load(url);
    }
    
-   funciton userInfoSetting(){
-	 $('#')
-   }
    
+    function  userInfoSetting(){
+    	var userId=$('#userId').val();
+	    var url=path+"/user/userInfoPage.do?userId="+userId;
+	    $('#main-container').load(url);
+	
+   } 
        </script>
        
 	</body>
