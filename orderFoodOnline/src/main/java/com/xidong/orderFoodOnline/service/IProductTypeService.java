@@ -12,5 +12,7 @@ public interface IProductTypeService {
 	  
 	  void delete(ProductType productType) throws Exception;
 	  
-	  List<ProductType> gettAll(ProductType productType) throws Exception;
+	  List<ProductType> getAll(ProductType productType) throws Exception;
+	  
+	  ProductType getProductTypeById(String productTypeId) throws Exception;
 }

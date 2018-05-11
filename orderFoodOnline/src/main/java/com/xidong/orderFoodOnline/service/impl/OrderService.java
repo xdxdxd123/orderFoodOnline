@@ -18,15 +18,15 @@ private IOrderDao orderDao;
 	
 	
 	@Override
-	public List<Order> getOrdersByUserId(String userId) throws Exception {
+	public List<Order> getOrdersByUserId(Order order) throws Exception {
 		// TODO Auto-generated method stub
-		return orderDao.getOrdersByUserId(userId);
+		return orderDao.getOrdersByUserId(order);
 	}
 
 	@Override
-	public List<Order> getOrdersByShopId(String shopId) throws Exception {
+	public List<Order> getOrdersByShopId(Order order) throws Exception {
 		// TODO Auto-generated method stub
-		return orderDao.getOrdersByShopId(shopId);
+		return orderDao.getOrdersByShopId(order);
 	}
 
 	@Override
@@ -45,5 +45,12 @@ private IOrderDao orderDao;
 	public void update(Order order) throws Exception {
 		// TODO Auto-generated method stub
 		orderDao.update(order);
+	}
+
+	@Override
+	public long getOrderTotal(Order order) throws Exception {
+		// TODO Auto-generated method stub
+		
+		return orderDao.getOrdertotal(order);
 	}
 }

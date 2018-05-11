@@ -9,6 +9,7 @@ import com.xidong.orderFoodOnline.dao.IUserDao;
 import com.xidong.orderFoodOnline.model.Shop;
 import com.xidong.orderFoodOnline.model.ShoppingCart;
 import com.xidong.orderFoodOnline.model.User;
+import com.xidong.orderFoodOnline.service.IShopService;
 import com.xidong.orderFoodOnline.service.IUserService;
 import com.xidong.orderFoodOnline.util.UUIDUtil;
 
@@ -21,6 +22,9 @@ public class UserServiceImpl implements IUserService {
     private IShoppingCartDao shoppingCartDao;
 	@Resource(name="shopDao")
 	private IShopDao shopDao;
+	@Resource(name="shopService")
+	private IShopService shopService;
+	
 	public void addUser(User user) throws Exception {
 		// TODO Auto-generated method stub
 		user.setUserid(UUIDUtil.getUUID());
@@ -35,7 +39,7 @@ public class UserServiceImpl implements IUserService {
 		Shop  shop=	new Shop();
 		shop.setUserid(user.getUserid());
 		shop.setShopId(UUIDUtil.getUUID());
-		shopDao.addShop(shop);
+		shopService.addShop(shop);
 		}	
 	}
 

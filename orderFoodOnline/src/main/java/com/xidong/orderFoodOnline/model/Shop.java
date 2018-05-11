@@ -21,7 +21,8 @@ public class Shop extends Page implements java.io.Serializable {
 	private String status;
 	@Column(name = "notice_")
 	private String notice;
-	
+	@Column(name="img_")
+	private String img;
 	public Shop() {
 	}
 
@@ -65,4 +66,11 @@ public class Shop extends Page implements java.io.Serializable {
 		this.notice = notice;
 	}
 
+	public void setImg(String img) {
+		this.img = img;
+	}
+	
+	public String getImg() {
+		return img;
+	}
 }

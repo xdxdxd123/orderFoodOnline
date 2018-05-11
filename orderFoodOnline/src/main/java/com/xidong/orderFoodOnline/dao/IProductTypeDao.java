@@ -13,5 +13,7 @@ public interface IProductTypeDao {
   void delete(ProductType productType) throws Exception;
   
   List<ProductType> selectAll(ProductType productType) throws Exception;
+  
+  ProductType selectProductTypeById(String productTypeId)     throws Exception;
 
 }

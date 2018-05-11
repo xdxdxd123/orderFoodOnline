@@ -40,9 +40,17 @@ private SessionFactory sessionFactory;
 	public List<ProductType> selectAll(ProductType productType) throws Exception {
 		// TODO Auto-generated method stub
 		Session  session=sessionFactory.getCurrentSession();
-	    String hql="from ProductType wherer shopId=:shopId";
+	    String hql="from ProductType where shopId=:shopId";
 		Query  query=session.createQuery(hql);
+		query.setParameter("shopId", productType.getShopId());
 		return query.list();
+	}
+
+	@Override
+	public ProductType selectProductTypeById(String productTypeId) throws Exception {
+		Session  session=sessionFactory.getCurrentSession();
+		return session.get(ProductType.class, productTypeId);
+		 
 	}
 
 }

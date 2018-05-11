@@ -61,91 +61,6 @@
 								<span class="badge badge-success">5</span>
 							</a>
 
-							<ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
-								<li class="dropdown-header">
-									<i class="ace-icon fa fa-envelope-o"></i>
-									13条未读信息
-								</li>
-
-								<li class="dropdown-content">
-									<ul class="dropdown-menu dropdown-navbar">
-										<li>
-											<a href="#">
-												<img src="assets/avatars/avatar.png" class="msg-photo" alt="Alex's Avatar" />
-												<span class="msg-body">
-													<span class="msg-title">
-														<span class="blue">B2C:</span>
-														系统产生20个错误，12个警告...
-													</span>
-
-													<span class="msg-time">
-														<i class="ace-icon fa fa-clock-o"></i>
-														<span>2014-12-15 18:00:00</span>
-													</span>
-												</span>
-											</a>
-										</li>
-
-										<li>
-											<a href="#">
-												<img src="assets/avatars/avatar3.png" class="msg-photo" alt="Susan's Avatar" />
-												<span class="msg-body">
-													<span class="msg-title">
-														<span class="blue">积分商城:</span>
-														系统产生20个错误，12个警告...
-													</span>
-
-													<span class="msg-time">
-														<i class="ace-icon fa fa-clock-o"></i>
-														<span>2014-12-15 18:00:00</span>
-													</span>
-												</span>
-											</a>
-										</li>
-
-										<li>
-											<a href="#">
-												<img src="assets/avatars/avatar2.png" class="msg-photo" alt="Kate's Avatar" />
-												<span class="msg-body">
-													<span class="msg-title">
-														<span class="blue">B2B:</span>
-														系统产生20个错误，12个警告...
-													</span>
-
-													<span class="msg-time">
-														<i class="ace-icon fa fa-clock-o"></i>
-														<span>2014-12-15 18:00:00</span>
-													</span>
-												</span>
-											</a>
-										</li>
-
-										<li>
-											<a href="#">
-												<img src="assets/avatars/avatar5.png" class="msg-photo" alt="Fred's Avatar" />
-												<span class="msg-body">
-													<span class="msg-title">
-														<span class="blue">货运系统:</span>
-														系统产生20个错误，12个警告...
-													</span>
-
-													<span class="msg-time">
-														<i class="ace-icon fa fa-clock-o"></i>
-														<span>2014-12-15 18:00:00</span>
-													</span>
-												</span>
-											</a>
-										</li>
-									</ul>
-								</li>
-
-								<li class="dropdown-footer">
-									<a href="inbox.html">
-										查看全部消息
-										<i class="ace-icon fa fa-arrow-right"></i>
-									</a>
-								</li>
-							</ul>
 						</li>
 
 						<!-- #section:basics/navbar.user_menu -->
@@ -154,7 +69,7 @@
 								<img class="nav-user-photo" src="assets/avatars/user.jpg" alt="Jason's Photo" />
 								<span class="user-info">
 									欢迎您<br />
-									汪锡东
+									<span id="username"></span>
 								</span>
 
 								<i class="ace-icon fa fa-caret-down"></i>
@@ -231,7 +146,7 @@
 					</li>
 
 					<li >
-						<a href="#">
+						<a href="#" onclick="productTypeManage()">
 							<i class="menu-icon fa fa-list"></i>
 							<span>商品类型管理</span>
 						</a>
@@ -316,10 +231,10 @@
         <script src="/orderFoodOnline/resources/plugins/bootstrap-table-v1.12.1/bootstrap-table-zh-CN.js"></script>
         <!-- 商品管理 -->
        <script  type="text/javascript">
-       
        $(function(){
     	   path=getRootPath();
     	   getShopId();
+    	   loadData()
        });
        
        function loadData(){
@@ -334,20 +249,28 @@
 					dataType:'json',
 					success:function(data){
 						if(data){
-							$('#username').val(data.returnJson);
-							console.log($('#username').val());
+							$('#username').text(data.returnJson);
 						}
 					}
 				});
 			}
        
        //商品列表
-       
     	  $("#productManage").on('click',function(event){
-    		var url=path+'/product/index.do'
+    		var url=path+'/product/index.do';
     	$('#pageContent').load(url);
     		 event.stopPropagation();  
     	  });
+       
+       
+      //商品类型列表
+       function productTypeManage(){
+    	   var shopId=$('#shopId').val();
+    	   alert(shopId);
+    	   var url=path+'/producttype/index.do?shopId='+shopId;
+    	   $('#pageContent').load(url);
+  		 event.stopPropagation(); 
+       }
       
 
    
@@ -362,13 +285,13 @@
        }
    }
   
-//注销
+   //注销
    $('#logout').on('click',function(){
 	   var  userId=$('#userId').val();
 		  window.location.href=path+"/user/logout.do?userId="+userId;
 	   });
    
-   //店铺id
+   //获得店铺id
    function getShopId(){
 	 var url=path+"/shop/selectShopByUserId.do";
 	 $.ajax({
@@ -376,8 +299,10 @@
 		 data:{
 			 userId:'${userId}'
 		 },
+		 dataType:'json',
 	     success:function(data){
-	    	 $('#shopId').val(data);
+	    	 $('#shopId').val(data.returnJson);
+	    	 
 	     }
 	 });
    }

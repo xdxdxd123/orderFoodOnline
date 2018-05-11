@@ -1,4 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
+<%
+    String path = request.getContextPath();
+    String basepath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
+
+%>
+<script  type="text/javascript">
+basePath='<%=basepath%>';
+</script>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -165,7 +173,8 @@
 		<script type="text/javascript">
 			window.jQuery || document.write("<script src='assets/js/jquery.min.js'>"+"<"+"/script>");
 		</script>
-
+        <script type="text/javascript" src="<%=basepath%>/resources/plugins/jquery-cookie/1.4/jquery.cookie.js" >
+        </script>
 		<!-- <![endif]-->
 
 		<!--[if IE]>
@@ -176,7 +185,7 @@
 		<script type="text/javascript">
 			if('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
 		</script>
-        <script type="text/javascript" src="/orderFoodOnline/resources/plugins/jquery-cookie-1.4.1/jquery.cookie.js"></script>
+  
 		<!-- inline scripts related to this page -->
 		<script type="text/javascript">
 			jQuery(function($) {

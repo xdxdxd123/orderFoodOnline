@@ -6,10 +6,12 @@ import com.xidong.orderFoodOnline.model.Order;
 
 public interface IOrderDao {
 	//买家订单
- List<Order> getOrdersByUserId(String userId) throws Exception;
+ List<Order> getOrdersByUserId(Order order) throws Exception;
  
     //卖家订单
- List<Order> getOrdersByShopId(String shopId) throws Exception;
+ List<Order> getOrdersByShopId(Order order) throws Exception;
+ 
+ long getOrdertotal(Order order);
  
  void add(Order order) throws Exception;
  

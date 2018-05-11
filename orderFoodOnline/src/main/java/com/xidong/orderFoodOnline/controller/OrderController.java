@@ -111,8 +111,8 @@ private IShopService shopService;
 			JSONArray array=null;
 			String userId = order.getUserId();
 		    User user=userService.findUserById(userId);
-			if ("买家".equals(user.getUsertype())) {
-				list = orderService.getOrdersByUserId(userId);
+			if (order.getShopId()==null) {
+				list = orderService.getOrdersByUserId(order);
 				 array = JSONArray.fromObject(list);
 				int length=array.size();
 			for(int index=0;index<length;index++ ){
@@ -134,7 +134,7 @@ private IShopService shopService;
 			}
 			map.put("userType", 1);
 			} else if("卖家".equals(user.getUsertype())){
-				list = orderService.getOrdersByShopId(order.getShopId());
+				list = orderService.getOrdersByShopId(order);
 			    array = JSONArray.fromObject(list);
 				int length=array.size();
 			for(int index=0;index<length;index++ ){
@@ -159,7 +159,7 @@ private IShopService shopService;
 			
 			}
 			map.put("rows", array);
-			map.put("total", list.size());
+			map.put("total",orderService.getOrderTotal(order));
 			JSONObject json = JSONObject.fromObject(map);
 			return json.toString();
 		} catch (Exception e) {

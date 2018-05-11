@@ -1,4 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
+<%
+    String path = request.getContextPath();
+    String basepath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
+
+%>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -24,7 +29,8 @@
 		<script src="assets/js/html5shiv.min.js"></script>
 		<script src="assets/js/respond.min.js"></script>
 		<![endif]-->
-		<link rel="stylesheet" href="/orderFoodOnline/resources/plugins/bootstrap-table-v1.12.1/bootstrap-table.css"/>
+		<link rel="stylesheet" href="<%=basepath%>/resources/plugins/bootstrap-table-v1.12.1/bootstrap-table.css"/>
+	   
 	</head>
 
 	<body class="no-skin">
@@ -50,9 +56,7 @@
 						</small>
 					</a>
 				</div>
-
-<div><a></a></div>
-
+				
 				<div class="navbar-buttons navbar-header pull-right" role="navigation">
 					<ul class="nav ace-nav">
 
@@ -68,7 +72,7 @@
 						<!-- #section:basics/navbar.user_menu -->
 						<li class="light-blue">
 							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
-								<img class="nav-user-photo" src="assets/avatars/user.jpg" alt="Jason's Photo" />
+								<img class="nav-user-photo" src="assets/avatars/user.jpg"/>
 								<input type="hidden" id="userId" value="${userId}">
 								<span class="user-info">
 									欢迎您<br />
@@ -192,12 +196,11 @@
 		<!--[if lte IE 8]>
 		  <script src="assets/js/excanvas.min.js"></script>
 		<![endif]-->
-		<script src="/resources/assets/js/jquery-ui.custom.min.js"></script>
-		<script src="/resources/assets/js/jquery.ui.touch-punch.min.js"></script>
 		<script src="assets/js/ace-elements.min.js"></script>
 		<script src="assets/js/ace.min.js"></script>
-        <script src="/orderFoodOnline/resources/plugins/bootstrap-table-v1.12.1/bootstrap-table.js"></script>
-        <script src="/orderFoodOnline/resources/plugins/bootstrap-table-v1.12.1/bootstrap-table-zh-CN.js"></script>
+        <script src="<%=basepath%>/resources/plugins/bootstrap-table-v1.12.1/bootstrap-table.js"></script>
+        <script src="<%=basepath%>/resources/plugins/bootstrap-table-v1.12.1/bootstrap-table-zh-CN.js"></script>
+        <script src="<%=basepath%>/resources/plugins/jquery-cookie/1.4/jquery.cookie.js"></script>
         <!-- 商品管理 -->
        <script  type="text/javascript">
        
@@ -261,12 +264,13 @@
    }
 
 	
-   
+   //店铺列表
    function shopList(){
 	  var  url=path+"/shop/getShops.do"; 
 	   $('#shops').load(url);
    }
    
+   //订单列表
    function myOrder(){
 	   var userId=$('#userId').val();
 	   var shopId=$('#shopId').val();
@@ -286,12 +290,12 @@
 	   });
    }
    
-   //店铺列表页面
+/*    //店铺列表页面
    function goIndex(){
 	   var url=path+"/user/buyer/index.do";
 	   $('#main-container').load(url);
    }
-   
+    */
    
     function  userInfoSetting(){
     	var userId=$('#userId').val();

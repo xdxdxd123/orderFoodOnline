@@ -51,7 +51,7 @@ public class UserController {
 		try {
 			userService.addUser(user);
 			json.setSuccess(true);
-			json.setUrl("user/login.jsp");
+			json.setUrl("user/loginPage.do");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

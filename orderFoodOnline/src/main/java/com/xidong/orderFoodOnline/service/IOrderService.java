@@ -7,14 +7,16 @@ import com.xidong.orderFoodOnline.model.Orderdetail;
 
 public interface IOrderService {
 	//买家订单
- List<Order> getOrdersByUserId(String userId) throws Exception;
+ List<Order> getOrdersByUserId(Order order) throws Exception;
  
     //卖家订单
- List<Order> getOrdersByShopId(String shopId) throws Exception;
+ List<Order> getOrdersByShopId(Order order) throws Exception;
  
  void add(Order order) throws Exception;
  
  void modify(Orderdetail orderDetail) throws Exception;
  
  void update(Order order) throws Exception;
+ 
+ long getOrderTotal(Order order) throws Exception;
 }

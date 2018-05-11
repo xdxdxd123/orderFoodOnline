@@ -1,4 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
+<%
+    String path = request.getContextPath();
+    String basepath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
+
+%>
+<script  type="text/javascript">
+basePath =<%=basepath%>;
+</script>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -43,8 +51,8 @@
 								<div id="signup-box" class="signup-box widget-box no-border visible">
 									<div class="widget-body">
 										<div class="widget-main">
-										<h4 class="header green lighter bigger">
-												新用户注册
+										<h4 class="header blue lighter bigger">
+												用户注册
 											</h4>
 										<div class="space-6"></div>
 											<form id='registerForm'>
@@ -80,15 +88,15 @@
 												
 												<label class="block clearfix">   
 											    <span
-													class="block input-icon input-icon-right"> <input
-														type="text" class="form-control" name="cellPhoneNumber" placeholder="手机号码"/>
+													class="block input-icon input-icon-right"> 
+													<input type="text" class="form-control" name="cellPhoneNumber" placeholder="手机号码"/>
 												</span>
 												</label> 
 												
 												 <label class="block clearfix">   
 											    <span
-													class="block input-icon input-icon-right"> <input
-														type="email" class="form-control" name="email" placeholder="电子邮箱" />
+													class="block input-icon input-icon-right"> 
+													<input  type="email" class="form-control" name="email" placeholder="电子邮箱" />
 												</span>
 												</label> 
 
@@ -96,23 +104,19 @@
 
 													<div class="clearfix">
 														<button type="reset" class="width-30 pull-left btn btn-sm">
-															<i class="ace-icon fa fa-refresh"></i>
 															<span class="bigger-110">重置</span>
 														</button>
 
-														<button type="button" class="width-65 pull-right btn btn-sm btn-success" onclick="register()">
+														<button type="button" class="width-65 pull-right btn btn-sm btn-success blue" onclick="register()">
 															<span class="bigger-110" >注册</span>
-
-															<i class="ace-icon fa fa-arrow-right icon-on-right"></i>
 														</button>
 													</div>
 												</fieldset>
 											</form>
 										</div>
 
-										<div class="toolbar center blue " style="color:#393939">
-											<a href="#" onclick="login()" data-target="#login-box" class="back-to-login-link">
-												<i class="ace-icon fa fa-arrow-left"></i>
+										<div class="toolbar center blue">
+											<a href="#" onclick="login()">
 												已有账号，去登录
 											</a>
 										</div>
@@ -142,7 +146,7 @@
 		<![endif]-->
 
 		<!-- inline scripts related to this page -->
-		<script type="text/javascript"></script>
+		
 		<script type="text/javascript">
 			function  register(){
 				var url=path+'/user/register.do';

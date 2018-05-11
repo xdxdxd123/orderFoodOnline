@@ -3,10 +3,8 @@ package com.xidong.orderFoodOnline.service.impl;
 import java.util.List;
 
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.xidong.orderFoodOnline.dao.IProductTypeDao;
 import com.xidong.orderFoodOnline.model.ProductType;
 import com.xidong.orderFoodOnline.service.IProductTypeService;
@@ -35,10 +33,16 @@ private IProductTypeDao productTypeDao;
 	}
 
 	@Override
-	public List<ProductType> gettAll(ProductType productType) throws Exception {
+	public List<ProductType> getAll(ProductType productType) throws Exception {
 		// TODO Auto-generated method stub
 		
 		return  productTypeDao.selectAll(productType);
+	}
+
+	@Override
+	public ProductType getProductTypeById(String productTypeId) throws Exception {
+		
+		return productTypeDao.selectProductTypeById(productTypeId);
 	}
 
 }

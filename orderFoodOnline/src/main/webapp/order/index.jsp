@@ -10,42 +10,29 @@
 	height: 200px;
 	border:1px solid #000;
 	}
-	
+	.pagination-info{
+	display:none;
+	}
 	div{
     margin:0 auto;	
+	}
+	
+	.row{
+	margin:5px 0px 5px 0px;
 	}
 	</style>
 	
 	<div class="container">
-	
-	<div class="row" style="border:1px solid #E8E8E8;">
-	
-	<div>
-	<form class="form-inline" role="form" id="searchForm" action="#"> 
-   <div class="form-group col-md-4"> 
-     <input type="text" class="form-control" id="name" placeholder="请输入商品名称" /> 
-    </div>
-    <div class="form-group col-md-4"> 
-     <input type="text" id="inputfile" placeholder="请选择商品类型" /> 
-    </div> 
-    <div class="form-group col-md-4"> 
-     <input type="text" id="inputfile" placeholder="请输入库存" /> 
-     
-    </div>     
-    <button type="reset" class="btn btn-primary">重置</button> 
-    <button type="submit" class="btn btn-primary" onclick="search()">提交</button> 
-     </form>
-	</div>
-	
-    
-   </div>
- 
-	
+	<span style="color:gray">订单列表</span>
 	<div style="margin-top: 10px;margin-bottom: 10px">
 	</div>
 	
-	<div style="margin-top: 10px"> 
-		<table id="ordertList" class="table"></table>
+	<div class="row">
+	<div class="col-md-1"></div>
+	<div style="margin-top: 10px;" class="col-md-10"> 
+		<table id="ordertList" class="table table-hover"></table>
+	</div>
+	<div class="col-md-1"></div>
 	</div>
 	</div>
 	
@@ -62,9 +49,9 @@
 			              pageSize: 10,                       //每页的记录行数（*）
 			              pageList: [10, 25],        //可供选择的每页的行数（*）
 			              queryParams : queryParams,//传递参数（*）
+			              queryParamsType:'',
 			              contentType: "application/x-www-form-urlencoded",
 			              minimumCountColumns: 2,             //最少允许的列数
-			              height: 700,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
 			              uniqueId: "orderId",                     //每一行的唯一标识，一般为主键列
 			              showColumns:false,
 			           columns: [
@@ -75,34 +62,41 @@
 			                  field: 'orderCode',
 			                  title: '订单号',
 			                  align: 'center',
+			                  width:'10%',
 			              }, {
 			                  field: 'shopName',
 			                  title: '店铺名称',
+			                  width:'10%',
 			                  align: 'center',
 			                  visible:false
 			              },{
 			                  field: 'buyer',
 			                  title: '买家',
 			                  align: 'center',
+			                  width:'10%',
 			                  visible:false
 			              },{
 			                  field: 'orderTotalPrice',
 			                  title: '订单总共支付（元）',
-			                  align: 'center'
+			                  align: 'center',
+			                  width:'10%'
 			              },{
 			            	  field:'buyersOrderStatus',
 			            	  title:'订单状态',
 			            	  align:'center',
-			            	  visible:false
+			            	  visible:false,
+			            	  width:'10%',
 			              },{
 			            	  field:'shopOrderStatus',
 			            	  title:'订单状态',
 			            	  align:'center',
-			            	  visible:false
+			            	  visible:false,
+			            	  width:'10%'
 			              },{
 			                  field: 'operate',
 			                  title: '操作',
 			                  align: 'center',
+			                  width:'10%',
 			                  formatter: operateFormatter  //添加操作
 			              }
 			              ],
@@ -149,36 +143,33 @@
 			   var userId=$('#userId').val();
 			 //查询参数
 				 function   queryParams(params) {
+				 console.log(params);
 					 params={
 				     shopId:shopId,
 				     userId:userId,
-				     pageNumber:1,
-				     pageSize:10
+				     pageNumber:params.pageNumber,
+				     pageSize:params.pageSize
 					 }
 					return params;
 				}
 
 			 function reloadTableData(){
-				 
-				 var opt={
-		                 url:url,
-					 };
-				 $("#orderList").bootstrapTable('refresh', opt);
+				 $("#ordertList").bootstrapTable('destroy');
+				 loadTable();
 			 }
 			 
 			 function search(){
-				 var searchForm=$('#searchForm').serialize();
+				// var searchForm=$('#searchForm').serialize();
 				 var url=path+"/product/list.do";
 				 var opt={
                  url:url,
-				 query:searchForm
+				 //query:searchForm
 			 };
-				 $("#orderList").bootstrapTable('refresh', opt);
+				 $("#ordertList").bootstrapTable('refresh', opt);
 				 }
 			 
 			 loadTable();
 			 function modifyOrderStatus(orderId,buyersOrderStatus,shopOrderStatus){
-				 alert('');
 				 var url=path+"/order/update.do";
 				 $.ajax({
 					 url:url,
@@ -189,8 +180,9 @@
 					 },
 					 type:'post',
 					 success:function(){
-						 reloadTableData();
-					 }
+						reloadTableData();
+						 return false;
+						 }
 				 });
 			 }
 			</script>

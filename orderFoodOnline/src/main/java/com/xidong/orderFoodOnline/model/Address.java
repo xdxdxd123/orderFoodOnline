@@ -6,21 +6,41 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="address_")
+@Table(name = "address_")
 public class Address implements java.io.Serializable {
-    @Id
-    @Column(name="address_id_")
+	@Id
+	@Column(name = "address_id_")
 	private String addressId;
-    @Column(name="user_id_")
+	
+	@Column(name = "user_id_")
 	private String userId;
-@Column(name="province_")
+
+	// 省份
+	@Column(name = "province_")
 	private String province;
-@Column(name="contact_")
-	private String contact;
-@Column(name="city_")
+	
+	//城市
+	@Column(name = "city_")
 	private String city;
-@Column(name="detail_address_")
+	
+	//详细地址
+	@Column(name = "detail_address_")
 	private String detailAddress;
+	
+	//联系方式
+		@Column(name = "contact_")
+		private String contact;
+
+    //是否默认地址
+	 private String  defaultAddr;
+
+	public String getDefaultAddr() {
+		return defaultAddr;
+	}
+
+	public void setDefaultAddr(String defaultAddr) {
+		this.defaultAddr = defaultAddr;
+	}
 
 	public Address() {
 	}
