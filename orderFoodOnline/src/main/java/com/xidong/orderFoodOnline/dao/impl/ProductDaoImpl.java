@@ -41,8 +41,8 @@ public class ProductDaoImpl implements IProductDao {
 	public void delProduct(Product product) throws Exception {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.getCurrentSession();
-		product.setStatus("DEL");
-		session.update(product);
+		Product  product_=session.get(Product.class, product.getProductId());
+		session.delete(product_);
 	}
 
 	@Override

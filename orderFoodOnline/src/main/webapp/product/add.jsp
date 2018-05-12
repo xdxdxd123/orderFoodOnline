@@ -16,7 +16,11 @@
 		<div class="form-group">
 			<label for="type"  class="control-label col-sm-2">商品类型</label> 
 			<div class="col-sm-3">
-			<input type="text" class="form-control" id="type" name='productTypeName' placeholder="请输入商品类型">
+			<!-- <input type="text" class="form-control" id="type" name='productTypeName' placeholder="请输入商品类型"> -->
+			<select name="productTypeId" id="type">
+			<option value="-1">请选择商品类型</option>
+			</select>
+			
 			</div>
 		</div>
 
@@ -82,7 +86,6 @@
 		contentType:false,
 		success:function(data){
 			if(data.isSuccess){
-				alert(data.message);
 				var url=path+'/product/index.do';
 				$('#pageContent').load(url);
 			}
@@ -94,23 +97,54 @@
 
 	
 	//编辑时回显数据
-	function  laodProduct(){
-		if(productId){
-			var url=path+"/product/getProduct.do?productId="+productId;
+	
+	function laodProduct() {
+		if (productId) {
+			var url = path + "/product/getProduct.do?productId=" + productId;
 			$.ajax({
-				url:url,
-				type:'get',
-				success:function(data){
-					data=$.parseJSON(data);
-		$('#name').val(data.productName);
-		$('#type').val(data.productName);
-		$('#price').val(data.price);
-		alert(data.price);
-		$('#discount').val(data.discount);
-				}
-			});
+						url : url,
+						type : 'get',
+						success : function(data) {
+							data = $.parseJSON(data);
+							$('#name').val(data.productName);
+							$('#type').val(data.productName);
+							$('#price').val(data.price);
+							$('#discount').val(data.discount);
+							$('#stock').val(data.stock);
+							$.ajax({
+										url : path+ '/producttype/getProductType.do?productTypeId='+data.productTypeId,
+										dataType : 'json',
+										success : function(res) {
+											$('#type').val(res.productTypeId);
+										}
+									});
+						}
+					});
 		}
 	}
-	
+
+	//加载商品类型
+	function loadProductType() {
+		var url = path + '/producttype/list.do?shopId=${shopId}';
+		$.ajax({
+			url : url,
+			dataType : 'json',
+			success : function(data) {
+				var list = data.rows;
+				var options = "";
+				var length = list.length;
+				for (var i = 0; i < length; i++) {
+					options = options
+							+ ' <option value=\''+list[i].productTypeId+'\'>'
+							+ list[i].productTypeName + '</option>';
+				}
+				console.log("op" + options);
+				$('#type').append(options);
+			}
+		});
+
+	}
+	loadProductType();
+
 	laodProduct();
-	</script>
+</script>

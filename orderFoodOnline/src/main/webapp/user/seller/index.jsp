@@ -55,13 +55,13 @@
 				<div class="navbar-buttons navbar-header pull-right" role="navigation">
 					<ul class="nav ace-nav">
 
-						<li class="green">
+						<!-- <li class="green">
 							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
 								<i class="ace-icon fa fa-envelope icon-animated-vertical"></i>
 								<span class="badge badge-success">5</span>
 							</a>
 
-						</li>
+						</li> -->
 
 						<!-- #section:basics/navbar.user_menu -->
 						<li class="light-blue">
@@ -76,7 +76,7 @@
 							</a>
 
 							<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-								<li>
+							<!-- 	<li>
 									<a href="#">
 										<i class="ace-icon fa fa-cog"></i>
 										系统设置
@@ -91,7 +91,7 @@
 								</li>
 
 								<li class="divider"></li>
-
+ -->
 								<li>
 									<a href="#" id='logout'>
 										<i class="ace-icon fa fa-power-off"></i>

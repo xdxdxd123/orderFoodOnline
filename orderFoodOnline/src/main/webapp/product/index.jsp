@@ -7,12 +7,13 @@
 	margin-bottom:20px;
 	}
 	.row1{
-	height: 200px;
+	height: 100px;
 	border:1px solid #000;
 	}
 	
 	.row3{
-	
+	margin-top: 5px;
+	margin-bottom: 5px
 	}
 	
 	
@@ -21,9 +22,10 @@
 	<div class="container">
 	
 	<div class="row row1 col-xs-10" style="border:1px solid #E8E8E8;">
-	
 <form class="form-inline" role="form" id="searchForm"> 
-   <div class="form-group col-md-4"> 
+
+<div class="row row3">
+<div class="form-group col-md-4"> 
      <input type="text" class="form-control" id="name" placeholder="请输入商品名称" /> 
     </div>
     <div class="form-group col-md-4"> 
@@ -32,13 +34,14 @@
     <div class="form-group col-md-4"> 
      <input type="text" id="inputfile" placeholder="请输入库存" /> 
      
-    </div>     <button type="reset" class="btn btn-primary">重置</button> 
+    </div>    
+</div>
+    <div class="row row3">
+    <button type="reset" class="btn btn-primary">重置</button> 
     <button type="submit" class="btn btn-primary" onclick="search()">提交</button> 
-    
+    </div>
    </form>
    </div>
-  
-	
 	<div style="margin-top: 10px;margin-bottom: 10px">
 	<div class="row rowStyle">
 			<div class="col-xs-10">
@@ -74,7 +77,6 @@
 			              queryParams : queryParams,//传递参数（*）
 			              contentType: "application/x-www-form-urlencoded",
 			              minimumCountColumns: 2,             //最少允许的列数
-			              height: 700,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
 			              uniqueId: "productId",                     //每一行的唯一标识，一般为主键列
 			              showColumns:false,
 			              			              columns: [
@@ -116,9 +118,8 @@
 			   
 			   function operateFormatter(value,row,index){
 				   return  "<a href='#' onclick=\"modifyProduct(\'"+row.productId+"\')\">修改</a>&nbsp;&nbsp;"+
-				           "<a href='#' onclick='delProduct('"+row.productId+"')'>删除</a>&nbsp;&nbsp;"+
-				           "<a href='#' onclick='putaway('"+row.productId+"')'>上架</a>&nbsp;&nbsp;"+
-				           "<a href='#' onclick='soldOut('"+row.productId+"')'>下架</a>";
+				           "<a href='#' onclick=\"delProduct(\'"+row.productId+"\')\">删除</a>";
+				           
 			   }
 			   
 			   $('#btn_add').on('click',function(){
@@ -147,18 +148,19 @@
 			 //删除商品
 			 function delProduct(id){
 				 var url=path+"/product/del.do?productId="+id;
-				 $('#pageContent').load();
+				$.ajax({
+					url:url,
+					dataType:'json',
+					success:function(data){
+						if(data.isSuccess){
+							 $('#productList').bootstrapTable('destroy');
+							 loadTable();
+							 alert("删除商品成功");
+						}
+					}
+				});
 			 };
-			 //上架商品
-			 function putaway(id){
-				 var url=path+"/product/onSale.do?productId="+id;
-				 $('#pageContent').load();
-			 };
-			 //下架商品
-			 function putaway(id){
-				 var url=path+"/product/onSale.do?productId="+id;
-			 };
-
+			 
 			 function search(){
 				 var searchForm=$('#searchForm').serialize();
 				 var url=path+"/product/list.do";

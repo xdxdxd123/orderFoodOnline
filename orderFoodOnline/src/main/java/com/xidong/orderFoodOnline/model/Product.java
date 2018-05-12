@@ -25,6 +25,7 @@ public class Product extends  Page implements java.io.Serializable {
 	@Column(name="product_type_id_")
 	private String productTypeId;
 
+	//产地
 	@Column(name="provenance_")
 	private String provenance;
 	

@@ -21,8 +21,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import com.xidong.orderFoodOnline.model.Product;
+import com.xidong.orderFoodOnline.model.ProductType;
 import com.xidong.orderFoodOnline.service.IProductService;
+import com.xidong.orderFoodOnline.service.IProductTypeService;
 import com.xidong.orderFoodOnline.util.JsonVo;
+
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 
@@ -34,6 +38,8 @@ public class ProductController {
 	public void setProductService(IProductService productService) {
 		this.productService = productService;
 	}
+	@Autowired
+	private IProductTypeService productTypeService;
 	
 	/**
 	 * 添加商品页面
@@ -79,7 +85,12 @@ public class ProductController {
 		}
 		return json;
 	}
-	
+	/**
+	 * 修改商品
+	 * @param product
+	 * @param picture
+	 * @return
+	 */
 	@RequestMapping(value="/modify",method=RequestMethod.POST)
 public 	 @ResponseBody JsonVo  modifyProduct(Product product,MultipartFile picture){
 		JsonVo json = new JsonVo();
@@ -95,14 +106,22 @@ public 	 @ResponseBody JsonVo  modifyProduct(Product product,MultipartFile pictu
 		  return json;
 	  }
 	
-	@RequestMapping(value="/del",method=RequestMethod.POST)
-	public void  delProduct(Product product){
+	/**
+	 * 删除商品
+	 * @param product
+	 */
+	@RequestMapping(value="/del",method=RequestMethod.GET)
+	public @ResponseBody String  delProduct(Product product){
+		JsonVo json=new JsonVo();
 		  try {
+			  json.setSuccess(true);
 			productService.delProduct(product);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			json.setSuccess(false);
 			e.printStackTrace();
 		}
+		  return JSONObject.fromObject(json).toString();
 	  }
 	
 	/**
@@ -114,8 +133,16 @@ public 	 @ResponseBody JsonVo  modifyProduct(Product product,MultipartFile pictu
 	public	@ResponseBody String selectProduct(Product product){
 		  try {
 			  List <Product> list=productService.selectProducts(product);
+			  JSONArray jsonProduct=JSONArray.fromObject(list);
+			  for(int index=0;index<list.size();index++){
+				 JSONObject productJson= jsonProduct.getJSONObject(index);
+				String productTypeId= productJson.getString("productTypeId");
+				ProductType productType= productTypeService.getProductTypeById(productTypeId);
+				productJson.accumulate("productTypeName", productType.getProductTypeName());
+			  }
+			  
 			  Map<String , Object> map=new HashMap<String , Object>();
-			  map.put("rows", list);
+			  map.put("rows", jsonProduct);
 			  map.put("total", list.size());
 			  JSONObject json= JSONObject.fromObject(map);
 		return	json.toString();
