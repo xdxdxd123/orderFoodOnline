@@ -18,4 +18,6 @@ public interface IProductDao {
 	void addProduct(Product product,MultipartFile picture) throws Exception;
 	
 	Product selectProductById(String productId) throws Exception;
+	
+	long getCoutAll(Product product) throws Exception;
 }

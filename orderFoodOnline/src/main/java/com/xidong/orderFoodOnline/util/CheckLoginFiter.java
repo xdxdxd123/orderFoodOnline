@@ -44,19 +44,21 @@ public class CheckLoginFiter implements Filter {
 	       String userId = (String) session.getAttribute("userId");  
 	        //获取请求地址  
 	        String url[] = req.getRequestURI().split("/");  
-	        //登录页面、登录请求和系统首页操作不用过滤  
-	        if(url[url.length-1].startsWith("login.do")||url[url.length-1].startsWith("loginPage.do")){  
+	        //登录和注册不拦截
+	        if(url[url.length-1].startsWith("login")||url[url.length-1].startsWith("register")||url[url.length-1].startsWith("logout")){  
 	            chain.doFilter(req, resp);  
 	            return;  
 	        }
 	        //判断是否已经登录，若是没有登录返回登录页面  
 	        if(userId==null||"".equals(userId)){  
-	            resp.sendRedirect("/index.jsp");
+	            resp.sendRedirect("http://localhost:8080/orderFoodOnline/user/loginPage.do");
+	            return;
 	        }else{  
 	            chain.doFilter(req, resp);  
+	            return;
 	        }  
 		// pass the request along the filter chain
-		chain.doFilter(request, response);
+		//chain.doFilter(request, response);
 	}
 
 	/**

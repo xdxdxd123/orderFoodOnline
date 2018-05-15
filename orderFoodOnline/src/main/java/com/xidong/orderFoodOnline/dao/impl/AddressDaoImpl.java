@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.xidong.orderFoodOnline.dao.IAddressDao;
 import com.xidong.orderFoodOnline.model.Address;
+import com.xidong.orderFoodOnline.util.UUIDUtil;
 
 @Repository(value = "addressDao")
 public class AddressDaoImpl implements IAddressDao {
@@ -21,21 +22,22 @@ public class AddressDaoImpl implements IAddressDao {
 	}
 
 	@Override
-	public void addAddress(Address Address) throws Exception {
+	public void addAddress(Address address) throws Exception {
 		// TODO Auto-generated method stub
-		sessionFactory.getCurrentSession().save(Address);
+		address.setAddressId(UUIDUtil.getUUID());
+		sessionFactory.getCurrentSession().save(address);
 	}
 
 	@Override
-	public void modifyAddress(Address Address) throws Exception {
+	public void modifyAddress(Address address) throws Exception {
 		// TODO Auto-generated method stub
-		sessionFactory.getCurrentSession().update(Address);
+		sessionFactory.getCurrentSession().update(address);
 	}
 
 	@Override
-	public void delAddress(Address Address) throws Exception {
+	public void delAddress(Address address) throws Exception {
 		// TODO Auto-generated method stub
-		sessionFactory.getCurrentSession().update(Address);
+		sessionFactory.getCurrentSession().update(address);
 	}
 
 	@Override
@@ -49,19 +51,38 @@ public class AddressDaoImpl implements IAddressDao {
 	}
 	
 	
-	//卖家id查询店铺
-	public Address selectAddressByUserId(String userId){
+	/**
+	 * 买家的所有收货地址
+	 * @param userId
+	 * @return
+	 */
+	public List< Address> selectAddressByUserId(String userId){
 	Session session=sessionFactory.getCurrentSession();
-	Query<Address> query=session.createQuery("from Address  where  userid=?");
-	query.setParameter(0, userId);
-	List<Address> Addresss= query.list();
-		return Addresss.get(0);
+	Query<Address> query=session.createQuery("from Address  where  userId=:userId");
+	query.setParameter("userId", userId);
+	List<Address> addresss= query.list();
+		return addresss;
 	}
 
 	@Override
+	/**
+	 * 买家单个收货地址
+	 */
 	public Address selectAddressById(String userId) throws Exception {
 		// TODO Auto-generated method stub
 		return	sessionFactory.getCurrentSession().get(Address.class, userId);
+	}
+
+	@Override
+	public void updateDefaultAddress(String userId) throws Exception {
+		// TODO Auto-generated method stub
+		
+	Session session=	sessionFactory.getCurrentSession();
+	String hql="update Address set defaultAddr=:defaultAddr where userId=:userId";
+	Query query= session.createQuery(hql);
+	query.setParameter("defaultAddr", "-1");
+	query.setParameter("userId", userId);
+	query.executeUpdate();
 	}
 
 }

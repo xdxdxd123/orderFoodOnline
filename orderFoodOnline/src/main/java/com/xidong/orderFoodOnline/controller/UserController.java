@@ -18,6 +18,8 @@ import com.xidong.orderFoodOnline.service.IShoppingCartService;
 import com.xidong.orderFoodOnline.service.IUserService;
 import com.xidong.orderFoodOnline.util.JsonVo;
 
+import net.sf.json.JSONObject;
+
 @Controller
 @RequestMapping(value = "/user")
 public class UserController {
@@ -191,9 +193,8 @@ public class UserController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "findById")
-	@ResponseBody
-	public JsonVo findById(String userId, HttpServletRequest request) {
+	@RequestMapping(value = "/findById")	
+	public @ResponseBody String  findById(String userId, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		  JsonVo  jsonVo=  new JsonVo();
 		if (session.getAttribute("userId") != null && userId != null) {
@@ -201,16 +202,14 @@ public class UserController {
 			User user=null;
 			try {
 				user = userService.findUserById(userId);
+				jsonVo.setReturnJson(user.getUsername());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			  jsonVo.setReturnJson(user.getUsername());
-				return jsonVo;
 			}
 		}
-		return jsonVo;
+		return JSONObject.fromObject(jsonVo).toString() ;
 	}
 	
 	@RequestMapping(value = "/buyer/index")

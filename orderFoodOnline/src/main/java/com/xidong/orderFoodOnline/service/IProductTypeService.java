@@ -15,4 +15,6 @@ public interface IProductTypeService {
 	  List<ProductType> getAll(ProductType productType) throws Exception;
 	  
 	  ProductType getProductTypeById(String productTypeId) throws Exception;
+	  
+	  long getCountAll(ProductType productType) throws Exception;
 }

@@ -1,7 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+  <style type="text/css" rel="stylesheet">
+  .myRow{
+  margin-bottom:10px;
+  margin-top: 10px;
+  }
+  </style>
+    
 <div class="container">
-<div class="row">
+<div class="row myRow">
     <div class="col-md-1"></div>
 	<div class="col-md-10">
 	<form  class="form-horizontal" role="form" id="addProductTypeForm"  method='post' enctype="multipart/form-data" action="#">
@@ -14,10 +21,14 @@
 			<input type="text" class="form-control" id="type" name='productTypeName'  id="name" placeholder="请输入商品类型名称">
 			</div>
 		</div>
-				<div class=class="form-group">
-					<button type="button" class="btn btn-primary" id='addProducttype'>提交</button>
+		     <div>
+		     <div class="col-md-2"></div>
+				<div class="form-group">
+					<button type="button" class="btn btn-primary" id='addProducttype'>保存</button>
 					<button type="reset" class="btn btn-primary">重置</button>
 				</div>
+			<div class="col-md-9"></div>
+			</div>
 
 			</form>
 	</div>
@@ -53,7 +64,6 @@
 
 	//编辑时回显数据
 	function laodProduct() {
-		alert(productTypeId);
 		if (productTypeId) {
 			var url = path + "/producttype/getProductType.do?productTypeId="
 					+ productTypeId;

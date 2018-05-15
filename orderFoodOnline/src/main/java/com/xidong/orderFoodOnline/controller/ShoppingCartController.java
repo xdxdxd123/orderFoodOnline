@@ -13,9 +13,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.xidong.orderFoodOnline.model.Address;
 import com.xidong.orderFoodOnline.model.Product;
 import com.xidong.orderFoodOnline.model.ShoppingCart;
 import com.xidong.orderFoodOnline.model.ShoppingCartItem;
+import com.xidong.orderFoodOnline.service.IAddressService;
 import com.xidong.orderFoodOnline.service.IProductService;
 import com.xidong.orderFoodOnline.service.IShopService;
 import com.xidong.orderFoodOnline.service.IShoppingCartItemService;
@@ -37,6 +39,8 @@ private IUserService userService;
 private IShopService shopService;
 @Autowired
 private IProductService productService;
+@Autowired
+private IAddressService addressService;
 
 public void setShopService(IShopService shopService) {
 	this.shopService = shopService;
@@ -110,12 +114,13 @@ public void setUserService(IUserService userService) {
 				totalPrice=totalPrice.add(sum);
 				productList.add(product);
 			}
-		
+		List<Address> addressList= addressService.selectAddressByUserId(userId);
 		model.addAttribute("shoppingCartItemList", shoppingCartItemList);
 		model.addAttribute("totalPrice", totalPrice.toString());
 		model.addAttribute("productList",productList);
 		model.addAttribute("shopId",shopId);
 		model.addAttribute("userId",userId);
+		model.addAttribute("addressList", addressList);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

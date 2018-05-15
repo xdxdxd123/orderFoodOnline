@@ -1,5 +1,6 @@
 package com.xidong.orderFoodOnline.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +35,7 @@ public class ProductTypeController {
 	 * @return
 	 */
 	@RequestMapping(value="/addPage")
-	public  String addProductPage(String shopId,Model model,@RequestParam(required=false) String  productTypeId) {
+	public  String addProductTypePage(String shopId,Model model,@RequestParam(required=false) String  productTypeId) {
 	    model.addAttribute("shopId",shopId);
 	    if(productTypeId!=null) {
 	    	 model.addAttribute("productTypeId", productTypeId);
@@ -48,14 +49,18 @@ public class ProductTypeController {
 		return "producttype/index";
 	}
 	
-	@RequestMapping(value="/list")
+	@RequestMapping(value="/list",produces="text/html;charset=UTF-8")
 	public  @ResponseBody String getProducttypeList(ProductType producttype)
 	{
 		List<ProductType> producttypeList=null;
 		Map<String ,Object>  map=new HashMap<String , Object>();
 		try {
+			if(producttype.getProductTypeName()!=null){
+				producttype.setProductTypeName(new String(producttype.getProductTypeName().getBytes("ISO-8859-1"),"UTF-8"))	;	
+			}
+
 			producttypeList = productTypeService.getAll(producttype);
-			map.put("total",producttypeList.size());
+			map.put("total",productTypeService.getCountAll(producttype));
 			map.put("rows", producttypeList);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

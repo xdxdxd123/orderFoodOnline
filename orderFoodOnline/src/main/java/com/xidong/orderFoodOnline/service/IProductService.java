@@ -20,4 +20,6 @@ public interface IProductService {
 	void modifyProduct(Product product,MultipartFile file) throws Exception;
 
 	List<Product> selectProducts(Product product) throws Exception;
+	
+	long getCountAll(Product product) throws Exception;
 }

@@ -1,7 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
-<form id="form" action="#" method='post'>
+
+<div class="container">
+    <div class="row">
+<div class="col-md-10 text-center">
+   <form id="form" action="#" method='post'>
+   <div class="form-group">
+   <label>请选择配送信息</label>
+  <c:forEach items="${addressList}" var="address" >
+   <div>
+   <c:if test="${address.defaultAddr eq '1'}">
+   <input  type="radio" name="addressId" value="${address.addressId}" checked="checked">
+   </c:if>
+    <c:if test="${address.defaultAddr eq '-1'}">
+   <input  type="radio" name="addressId" value="${address.addressId}">
+   </c:if>
+   <label class="label label-info">${address.province}</label>
+    <label class="label label-info">${address.city}</label>
+     <label class="label label-info">${address.detailAddress}</label>
+      <label class="label label-info">${address.contact}</label>
+   </div>
+  </c:forEach>
+   </div>
     <input type="hidden" id="shoppingCartId" value="${shoppingCartId}"/>
      <input type="hidden" name="shopId" value="${shopId}"/>
      <input type="hidden" name="userId" value="${userId }"/>
@@ -34,13 +55,19 @@
     <button class="btn btn-primary" style="float:right" onclick="pay()">立即支付</button>
     </div>
    </form>
+</div>
+
+</div>
+
+
+</div>
+
 <script type="text/javascript">
 function pay(){
 	if(window.confirm("确定支付吗")){
 		var formData=$('#form').serialize();
 		var url=path+"/order/orderCreate.do";
 	$('#pageContent').load(url,formData);
-		
 	 /*    $.ajax({
 	    url:url,
 	    type:'post',

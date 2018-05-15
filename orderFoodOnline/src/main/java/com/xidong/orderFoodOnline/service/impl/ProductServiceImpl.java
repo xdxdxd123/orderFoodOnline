@@ -49,7 +49,7 @@ return  productDao.selectProducts(product);
        if(filePath!=null) {
     	   product.setImage(filePath);
        }
-    product.setSalePrice( product.getPrice().multiply(new BigDecimal(new Long(product.getDiscount()).toString()).divide(new BigDecimal("100.00")))); 
+    product.setSalePrice( product.getPrice().multiply(new BigDecimal((product.getDiscount())).divide(new BigDecimal("100.00")))); 
    
 		  productDao.addProduct(product);
 	}
@@ -71,7 +71,14 @@ return  productDao.selectProducts(product);
 	       if(filePath!=null) {
 	    	   product.setImage(filePath);
 	       }
+	       product.setSalePrice( product.getPrice().multiply(new BigDecimal((product.getDiscount())).divide(new BigDecimal("100.00")))); 
 			  productDao.modifyProduct(product);
+	}
+
+	@Override
+	public long getCountAll(Product product) throws Exception {
+		// TODO Auto-generated method stub
+		return productDao.getCoutAll(product);
 	}
 
 }

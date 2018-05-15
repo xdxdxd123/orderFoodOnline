@@ -46,7 +46,7 @@ public class Product extends  Page implements java.io.Serializable {
 
 	//库存
 	@Column(name="stock_")
-	private int stock;
+	private int stock=-1;
 	
 	public Product() {
 	}

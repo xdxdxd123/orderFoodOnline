@@ -90,7 +90,6 @@ basePath='<%=basepath%>';
 														</label>
 
 														<button type="button" class="width-35 pull-right btn btn-sm btn-primary"  onclick="login()">
-															<i class="ace-icon fa fa-key"></i>
 															<span class="bigger-110" >登录</span>
 														</button>
 													</div>
@@ -102,17 +101,15 @@ basePath='<%=basepath%>';
 										</div><!-- /.widget-main -->
 
 										<div class="toolbar clearfix">
-											<div>
+											<!-- <div>
 												<a href="#" data-target="#forgot-box" class="forgot-password-link">
 													<i class="ace-icon fa fa-arrow-left"></i>
 													忘记密码
 												</a>
-											</div>
-
-											<div>
-												<a href="#" onclick="register()" data-target="#signup-box" class="user-signup-link">
+											</div>-->
+											<div class="">
+												<a href="#" onclick="register()" data-target="#signup-box" class="white">
 													用户注册
-													<i class="ace-icon fa fa-arrow-right"></i>
 												</a>
 											</div>
 										</div>

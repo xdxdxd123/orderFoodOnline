@@ -1,6 +1,5 @@
 package com.xidong.orderFoodOnline.controller;
 
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -8,10 +7,9 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +23,6 @@ import com.xidong.orderFoodOnline.model.ProductType;
 import com.xidong.orderFoodOnline.service.IProductService;
 import com.xidong.orderFoodOnline.service.IProductTypeService;
 import com.xidong.orderFoodOnline.util.JsonVo;
-
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -65,15 +62,15 @@ public class ProductController {
 	 * @return
 	 */
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public @ResponseBody JsonVo addProduct(Product product, MultipartFile picture) {
+	public @ResponseBody JsonVo addProduct(Product product, MultipartFile picture,HttpServletRequest request) {
 		JsonVo json = new JsonVo();
 		try {
-
 			json.setSuccess(true);
-			product.getPrice().setScale(2);
 		    if(product.getSalePrice()!=null) {
 		    	product.getSalePrice().setScale(2);
 		    }
+		   String imagePath= request.getServletContext().getRealPath("/resources/picture/shop_default.jpg");
+		    product.setImage(imagePath);
 			productService.addProduct(product, picture);
 			json.setMessage("增加商品成功");
 			json.setUrl("product/index.do");
@@ -129,9 +126,11 @@ public 	 @ResponseBody JsonVo  modifyProduct(Product product,MultipartFile pictu
 	 * @param product
 	 * @return
 	 */
-	@RequestMapping(value="/list",produces="text/html;charset=UTF-8")
+	@RequestMapping(value="/list",method=RequestMethod.POST)
 	public	@ResponseBody String selectProduct(Product product){
+		JSONObject json=null;
 		  try {
+			  product.setProductName(new String (product.getProductName().getBytes("ISO-8859-1"),"UTF-8"));
 			  List <Product> list=productService.selectProducts(product);
 			  JSONArray jsonProduct=JSONArray.fromObject(list);
 			  for(int index=0;index<list.size();index++){
@@ -140,17 +139,16 @@ public 	 @ResponseBody JsonVo  modifyProduct(Product product,MultipartFile pictu
 				ProductType productType= productTypeService.getProductTypeById(productTypeId);
 				productJson.accumulate("productTypeName", productType.getProductTypeName());
 			  }
-			  
 			  Map<String , Object> map=new HashMap<String , Object>();
 			  map.put("rows", jsonProduct);
-			  map.put("total", list.size());
-			  JSONObject json= JSONObject.fromObject(map);
-		return	json.toString();
+			  map.put("total", productService.getCountAll(product));
+			  json= JSONObject.fromObject(map);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+
+			return	json.toString();
 	  }
 	
 	

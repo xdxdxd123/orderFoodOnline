@@ -19,7 +19,7 @@ public class OrderDaoImpl implements IOrderDao {
 	public List<Order> getOrdersByUserId(Order order) throws Exception {
 		// TODO Auto-generated method stub
 		Session session=sessionFactory.getCurrentSession();
-		String hql="select new com.xidong.orderFoodOnline.model.Order(order.orderId,order.orderTotalPrice,order.shopOrderStatus,order.userId,order.shopId,order.buyersOrderStatus,order.status,order.createDate,order.orderCode) from  Order order  where  order.userId=:userId ";
+		String hql="select new com.xidong.orderFoodOnline.model.Order(order.orderId,order.orderTotalPrice,order.shopOrderStatus,order.userId,order.shopId,order.buyersOrderStatus,order.status,order.createDate,order.orderCode,order.addressId) from  Order order  where  order.userId=:userId ";
 		Query query  =session.createQuery(hql);
 		query.setParameter("userId", order.getUserId());
 		query.setFirstResult((order.getPageNumber()-1)*order.getPageSize());
@@ -31,7 +31,7 @@ public class OrderDaoImpl implements IOrderDao {
 	public List<Order> getOrdersByShopId(Order order) throws Exception {
 		Session session=sessionFactory.getCurrentSession();
 		String hql="select new com.xidong.orderFoodOnline.model.Order(order.orderId, order.orderTotalPrice, order.shopOrderStatus, order.userId, order.shopId,"+
-			 "order.buyersOrderStatus, order.status, order.createDate, order.orderCode) from Order order where  order.shopId=:shopId";
+			 "order.buyersOrderStatus, order.status, order.createDate, order.orderCode,order.addressId) from Order order where  order.shopId=:shopId";
 		Query query  =session.createQuery(hql);
 		query.setParameter("shopId", order.getShopId());
 		query.setFirstResult((order.getPageNumber()-1)*order.getPageSize());

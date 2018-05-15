@@ -31,15 +31,15 @@ public class Order extends Page implements java.io.Serializable {
 	private Date createDate;
 	@Column(name="order_code_")
 	private String orderCode;
-
+	@Column(name="address_id_")
+    private String addressId;
 	public Order() {
 	}
 
-	
-	
+
 
 	public Order(String orderId, BigDecimal orderTotalPrice, String shopOrderStatus, String userId, String shopId,
-			String buyersOrderStatus, String status, Date createDate, String orderCode) {
+			String buyersOrderStatus, String status, Date createDate, String orderCode, String addressId) {
 		this.orderId = orderId;
 		this.orderTotalPrice = orderTotalPrice;
 		this.shopOrderStatus = shopOrderStatus;
@@ -49,8 +49,8 @@ public class Order extends Page implements java.io.Serializable {
 		this.status = status;
 		this.createDate = createDate;
 		this.orderCode = orderCode;
+		this.addressId = addressId;
 	}
-
 
 
 
@@ -124,6 +124,20 @@ public class Order extends Page implements java.io.Serializable {
     
     public String getOrderCode() {
 		return orderCode;
+	}
+
+
+
+
+	public String getAddressId() {
+		return addressId;
+	}
+
+
+
+
+	public void setAddressId(String addressId) {
+		this.addressId = addressId;
 	}   
     
 }

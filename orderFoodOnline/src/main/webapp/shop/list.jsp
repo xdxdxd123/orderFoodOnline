@@ -27,7 +27,7 @@
     </div>
     <script>
 function visitShop(shopId){
-	var url=path+"/product/getDetail.do?shopId="+shopId;
+	var url=path+"/product/getDetail.do?shopId="+shopId+'&pageNumber=0&pageSize=0';
 	$('#pageContent').load(url);
 }
     </script>

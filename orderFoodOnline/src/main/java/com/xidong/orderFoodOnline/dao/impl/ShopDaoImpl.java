@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -53,8 +52,8 @@ public class ShopDaoImpl implements IShopDao {
 	//卖家id查询店铺
 	public Shop selectShopByUserId(String userId){
 	Session session=sessionFactory.getCurrentSession();
-	Query<Shop> query=session.createQuery("from Shop  where  userid=?");
-	query.setParameter(0, userId);
+	Query<Shop> query=session.createQuery("from Shop  where  userid=:userId");
+	query.setParameter("userId", userId);
 	List<Shop> shops= query.list();
 		return shops.get(0);
 	}

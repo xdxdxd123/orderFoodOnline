@@ -45,4 +45,10 @@ private IProductTypeDao productTypeDao;
 		return productTypeDao.selectProductTypeById(productTypeId);
 	}
 
+	@Override
+	public long getCountAll(ProductType productType) throws Exception {
+		// TODO Auto-generated method stub
+		return productTypeDao.getCountAll(productType);
+	}
+
 }

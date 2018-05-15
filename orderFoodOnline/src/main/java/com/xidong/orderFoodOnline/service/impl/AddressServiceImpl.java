@@ -38,8 +38,8 @@ public class AddressServiceImpl implements IAddressService {
 	@Override
 	public List<Address> selectAllAddress() throws Exception {
 		// TODO Auto-generated method stub
-		List<Address>   Addresss =addressDao.selectAllAddress();
-		return Addresss;
+		List<Address>   addresss =addressDao.selectAllAddress();
+		return addresss;
 	}
 
 	@Override
@@ -51,9 +51,15 @@ public class AddressServiceImpl implements IAddressService {
 	
 	
 	@Override
-	public Address selectAddressByUserId(String userId) throws Exception {
+	public List<Address> selectAddressByUserId(String userId) throws Exception {
 		// TODO Auto-generated method stub
-		return addressDao.selectAddressById(userId);
+		return addressDao.selectAddressByUserId(userId);
+	}
+
+	@Override
+	public void updateDefaultAddress(String userId) throws Exception {
+		// TODO Auto-generated method stub
+		addressDao.updateDefaultAddress(userId);
 	}
 
 

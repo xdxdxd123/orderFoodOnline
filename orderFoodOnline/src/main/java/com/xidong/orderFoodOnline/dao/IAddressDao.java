@@ -14,4 +14,8 @@ public interface IAddressDao {
 	List<Address> selectAllAddress() throws Exception;
 	
 	Address selectAddressById(String id) throws Exception;
+	
+	List<Address> selectAddressByUserId(String userId)  throws Exception;
+	
+	void  updateDefaultAddress(String userId) throws Exception;
 }

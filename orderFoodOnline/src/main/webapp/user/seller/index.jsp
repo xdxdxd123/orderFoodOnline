@@ -66,7 +66,7 @@
 						<!-- #section:basics/navbar.user_menu -->
 						<li class="light-blue">
 							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
-								<img class="nav-user-photo" src="assets/avatars/user.jpg" alt="Jason's Photo" />
+								<img class="nav-user-photo" src="http://localhost:8080/orderFoodOnline/resources/picture/user.jpg" alt="userPhoto" />
 								<span class="user-info">
 									欢迎您<br />
 									<span id="username"></span>
@@ -266,7 +266,6 @@
       //商品类型列表
        function productTypeManage(){
     	   var shopId=$('#shopId').val();
-    	   alert(shopId);
     	   var url=path+'/producttype/index.do?shopId='+shopId;
     	   $('#pageContent').load(url);
   		 event.stopPropagation(); 

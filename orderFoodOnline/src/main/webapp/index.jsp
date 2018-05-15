@@ -72,7 +72,7 @@
 						<!-- #section:basics/navbar.user_menu -->
 						<li class="light-blue">
 							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
-								<img class="nav-user-photo" src="assets/avatars/user.jpg"/>
+								<img class="nav-user-photo" src="http://localhost:8080/orderFoodOnline/resources/picture/user.jpg"/>
 								<input type="hidden" id="userId" value="${userId}">
 								<span class="user-info">
 									欢迎您<br />
@@ -91,9 +91,9 @@
 								</li>
 
 								<li>
-									<a href="#" onclick="userInfoSetting()">
+									<a href="#" onclick="addressManage()">
 										<i class="ace-icon fa fa-user"></i>
-										个人信息设置
+										收货地址管理
 									</a>
 								</li>
 
@@ -142,7 +142,7 @@
 				<div class="page-content">
 					<!-- /section:settings.box -->
 					<div class="page-content-area" id='pageContent'>
-					<div  style="margin: 20px 100px 20px 100px">
+				<!-- 	<div  style="margin: 20px 100px 20px 100px">
 					<form class="form-search">
 							<span class="input-icon">
 								<input type="text" placeholder=" 店铺" class="nav-search-input" id="nav-search-input" autocomplete="off" />
@@ -151,7 +151,7 @@
 							<span   class="input-icon btn btn-primary">搜索</span>
 					</form>
 					
-					</div>
+					</div> -->
 
 					<div class="row" style="width: 1210px; margin: 0 auto;" id='shops'>
 						
@@ -290,19 +290,10 @@
 	   });
    }
    
-/*    //店铺列表页面
-   function goIndex(){
-	   var url=path+"/user/buyer/index.do";
-	   $('#main-container').load(url);
+   function addressManage( ){
+	  var url=path+"/address/index.do";
+	   $('#pageContent').load(url);
    }
-    */
-   
-    function  userInfoSetting(){
-    	var userId=$('#userId').val();
-	    var url=path+"/user/userInfoPage.do?userId="+userId;
-	    $('#main-container').load(url);
-	
-   } 
        </script>
        
 	</body>

@@ -15,5 +15,7 @@ public interface IAddressService {
 	
 	Address  selectAddressById(String id) throws Exception;
 	
-	Address selectAddressByUserId(String userId) throws Exception;
+	List<Address> selectAddressByUserId(String userId) throws Exception;
+	
+	void updateDefaultAddress(String userId) throws Exception;
 }

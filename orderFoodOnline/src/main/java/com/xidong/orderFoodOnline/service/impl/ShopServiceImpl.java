@@ -8,17 +8,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.xidong.orderFoodOnline.dao.IShopDao;
 import com.xidong.orderFoodOnline.model.Shop;
+import com.xidong.orderFoodOnline.model.User;
 import com.xidong.orderFoodOnline.service.IShopService;
+import com.xidong.orderFoodOnline.service.IUserService;
 
 @Service(value = "shopService")
 @Transactional
 public class ShopServiceImpl implements IShopService {
 	@Autowired
 	private IShopDao shopDao;
+	@Autowired
+	private IUserService userService;
 
 	@Override
 	public void addShop(Shop shop) throws Exception {
 		// TODO Auto-generated method stub
+
+		//默认信息
+		User user=userService.findUserById(shop.getUserid()); 
+		shop.setNotice("欢迎光临");
+		shop.setShopname(user.getUsername());
+		shop.setImg("/resources/picture/shop_default.jpg");
 		shopDao.addShop(shop);
 	}
 

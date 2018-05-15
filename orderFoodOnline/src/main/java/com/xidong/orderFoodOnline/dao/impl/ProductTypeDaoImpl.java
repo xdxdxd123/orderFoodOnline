@@ -40,9 +40,20 @@ private SessionFactory sessionFactory;
 	public List<ProductType> selectAll(ProductType productType) throws Exception {
 		// TODO Auto-generated method stub
 		Session  session=sessionFactory.getCurrentSession();
-	    String hql="from ProductType where shopId=:shopId";
+	    String hql="select new ProductType(productTypeId,productTypeName,shopId,status) from ProductType where shopId=:shopId";
+	    if(productType.getProductTypeName()!=null&&!"".equals(productType.getProductTypeName())){
+	    	hql="from ProductType where shopId=:shopId and productTypeName=:productTypeName";
+	    }
 		Query  query=session.createQuery(hql);
 		query.setParameter("shopId", productType.getShopId());
+		if(productType.getProductTypeName()!=null&&!"".equals(productType.getProductTypeName())){
+			query.setParameter("productTypeName", productType.getProductTypeName());	
+		}
+		if(productType.getPageNumber()>0&&productType.getPageSize()>0){
+			query.setFirstResult((productType.getPageNumber()-1)*productType.getPageSize());
+			query.setMaxResults(productType.getPageSize());
+		}
+		
 		return query.list();
 	}
 
@@ -52,5 +63,27 @@ private SessionFactory sessionFactory;
 		return session.get(ProductType.class, productTypeId);
 		 
 	}
+
+	@Override
+	public long getCountAll(ProductType productType) throws Exception {
+		// TODO Auto-generated method stub
+		Session  session=sessionFactory.getCurrentSession();
+	    String hql=" from ProductType where shopId=:shopId";
+	    if(productType.getProductTypeName()!=null&&!"".equals(productType.getProductTypeName())){
+	    	hql="from ProductType where shopId=:shopId and productTypeName=:productTypeName";
+	    }
+		Query<Long>  query=session.createQuery(hql);
+		query.setParameter("shopId", productType.getShopId());
+		if(productType.getProductTypeName()!=null&&!"".equals(productType.getProductTypeName())){
+			query.setParameter("productTypeName", productType.getProductTypeName());	
+		}
+		
+	if(query.list()!=null){
+		return query.list().size();
+	}else return 0;
+	}
+	
+	
+	
 
 }

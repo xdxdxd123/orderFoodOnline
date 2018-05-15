@@ -32,6 +32,7 @@ public class Address implements java.io.Serializable {
 		private String contact;
 
     //是否默认地址
+		@Column(name="default_address_")
 	 private String  defaultAddr;
 
 	public String getDefaultAddr() {

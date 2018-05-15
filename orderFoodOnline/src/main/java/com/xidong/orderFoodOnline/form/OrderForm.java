@@ -10,6 +10,7 @@ public class OrderForm {
 	private BigDecimal totalPrice;
     private String userId;
     private String ShopId;
+    private String addressId;
 	public String[] getShoppingCartItemIds() {
 		return shoppingCartItemIds;
 	}
@@ -51,6 +52,12 @@ public class OrderForm {
 	}
 	public void setShopId(String shopId) {
 		ShopId = shopId;
+	}
+	public String getAddressId() {
+		return addressId;
+	}
+	public void setAddressId(String addressId) {
+		this.addressId = addressId;
 	}
 	
 

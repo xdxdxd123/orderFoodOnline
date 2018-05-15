@@ -5,9 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.xidong.orderFoodOnline.form.Page;
+
 @Entity
 @Table(name = "producttype_")
-public class ProductType implements java.io.Serializable {
+public class ProductType extends Page implements java.io.Serializable {
     @Id
 	@Column(name="product_type_id_")
 	private String productTypeId;
@@ -23,6 +25,17 @@ public class ProductType implements java.io.Serializable {
 
 	public ProductType() {
 	}
+	
+	
+
+	public ProductType(String productTypeId, String productTypeName, String shopId, String status) {
+		this.productTypeId = productTypeId;
+		this.productTypeName = productTypeName;
+		this.shopId = shopId;
+		this.status = status;
+	}
+
+
 
 	public String getProductTypeId() {
 		return this.productTypeId;

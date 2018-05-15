@@ -1,7 +1,5 @@
 package com.xidong.orderFoodOnline.dao.impl;
 
-
-import java.math.BigDecimal;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -59,11 +57,16 @@ public class ProductDaoImpl implements IProductDao {
 		if(productTypeId!=null&&!"".equals(productTypeId)){
 			sql.append(" and productTypeId=:productTypeId");
 		}
+		
+		if(product.getProductName()!=null&&!"".equals(product.getProductName())){
+			sql.append(" and productName=:productName");
+		}
+		
 		int stock=product.getStock();
 		
-		/*if(){
+		if(stock>=0){
 			sql.append(" and stock=:stock");
-		}*/
+		}
 		Query<Product> query = session.createQuery(sql.toString());		
 		
 		if(!"".equals(product.getShopId())){
@@ -72,9 +75,19 @@ public class ProductDaoImpl implements IProductDao {
 		if(productTypeId!=null&&!"".equals(productTypeId)){
 			query.setParameter("productTypeId",productTypeId);
 		}
-	/*	if(!"".equals(product.getStock())){
+		
+		if(product.getProductName()!=null&&!"".equals(product.getProductName())){
+			query.setParameter("productName", product.getProductName());
+		}
+		
+	if(product.getStock()>=0){
 			query.setParameter("stock",product.getStock());
-			}*/
+			}
+	if(product.getPageSize()>0&&product.getPageNumber()>0){
+		query.setFirstResult((product.getPageNumber()-1)*product.getPageSize());
+		query.setMaxResults(product.getPageSize());
+	}
+	
 		List<Product> products=query.list();
 		return products;
 	}
@@ -90,6 +103,25 @@ public class ProductDaoImpl implements IProductDao {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.getCurrentSession();
 		return session.get(Product.class, productId);
+	}
+
+	@Override
+	public long getCoutAll(Product product) throws Exception {
+		// TODO Auto-generated method stub
+		Session  session=sessionFactory.getCurrentSession();
+	    String hql=" from Product where shopId=:shopId";
+	    if(product.getProductName()!=null&&!"".equals(product.getProductName())){
+	    	hql="from Product where shopId=:shopId and productName=:productName";
+	    }
+		Query<Product>  query=session.createQuery(hql);
+		query.setParameter("shopId", product.getShopId());
+		if(product.getProductName()!=null&&!"".equals(product.getProductName())){
+			query.setParameter("productName", product.getProductName());	
+		}
+		
+	if(query.list()!=null){
+		return query.list().size();
+	}else return 0;
 	}
 
 }

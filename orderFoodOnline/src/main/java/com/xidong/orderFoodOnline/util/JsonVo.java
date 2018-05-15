@@ -6,6 +6,8 @@ public class JsonVo {
 	private String message;
 	private String url;
 
+	
+	
 	public void setMessage(String message) {
 		this.message = message;
 	}

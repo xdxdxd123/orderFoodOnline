@@ -16,7 +16,6 @@
 		<div class="form-group">
 			<label for="type"  class="control-label col-sm-2">商品类型</label> 
 			<div class="col-sm-3">
-			<!-- <input type="text" class="form-control" id="type" name='productTypeName' placeholder="请输入商品类型"> -->
 			<select name="productTypeId" id="type">
 			<option value="-1">请选择商品类型</option>
 			</select>
@@ -54,13 +53,17 @@
 							placeholder="请输入折扣（百分比）"><span>%</span>
 					</div>
 				</div>
-				
+			
 				<div class=class="form-group">
-					<button type="button" class="btn btn-default col-sm-offset-2"
-						id='addProduct'>提交</button>
-					<button type="reset" class="btn btn-default col-sm-offset-2">重置</button>
+				<div class="col-md-2"></div>
+				<div class="col-md-2">
+				<button type="button" class="btn btn-primary col-sm-offset-2"
+						id='addProduct'>保存</button>
+					<button type="reset" class="btn btn-primary col-sm-offset-2">重置</button>
+					<!-- <button type="button" class="btn btn-primary col-sm-offset-2" onclick="returnList()">返回</button> -->
 				</div>
-
+				</div>
+                <div class="col-md-8"></div>
 			</form>
 	</div>
 </div>
@@ -129,6 +132,10 @@
 		$.ajax({
 			url : url,
 			dataType : 'json',
+			data:{
+			pageSize:0,
+			pageNumber:0
+			},
 			success : function(data) {
 				var list = data.rows;
 				var options = "";
@@ -147,4 +154,8 @@
 	loadProductType();
 
 	laodProduct();
+/* 	function returnList(){
+		var url=
+		$('#pageContent').load(url);
+	} */
 </script>

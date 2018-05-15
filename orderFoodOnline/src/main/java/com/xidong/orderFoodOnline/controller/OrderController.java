@@ -62,6 +62,7 @@ private IShopService shopService;
 		order.setOrderId(orderId);
 		order.setShopId(orderForm.getShopId());
 		order.setUserId(orderForm.getUserId());
+		order.setAddressId(orderForm.getAddressId());
 		int  length=orderForm.getShoppingCartItemIds().length;
 		for(int index=0;index<length;index++ ){
 		Orderdetail orderDetail=new Orderdetail();

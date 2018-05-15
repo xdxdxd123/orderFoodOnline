@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
-    
-    <div  style="margin: 20px 100px 20px 100px">
+<!--     <div  style="margin: 20px 100px 20px 100px">
 					<form class="form-search">
 							<span class="input-icon">
 								<input type="text" placeholder="商品" class="nav-search-input" id="nav-search-input" autocomplete="off" />
@@ -11,7 +10,7 @@
 							<span   class="input-icon btn btn-primary">搜索</span>
 					</form>
 					
-					</div>
+					</div> -->
     <div class="col-md-12">
     <input id="shopId" value="${shopId}" type="hidden">
     <c:forEach items="${productList}" var="product">
@@ -44,17 +43,21 @@
 </c:forEach>  
     </div>
     <div>
+   <!--  <button class="btn btn-primary" style="float:left" onclick="returnShopList()">返回店铺列表</button> -->
     <button class="btn btn-primary" style="float:right;" onclick="goPay()">去结算</button>
     </div>
     <script  type="text/javascript">
     //购物车增加或删除商品
+    var productTotalSelected=0;
 function operateShoppingCart(productId,flag){
 	var productCount=$('#productCount'+productId);
 	var count=parseInt(productCount.val());
 	var userId=$('#userId').val();
 	if(flag==1){
+		productTotalSelected++;
 		count++;
 		}else{
+			productTotalSelected;
         count--;
 			}
 	productCount.val(count);
@@ -86,9 +89,21 @@ function operateShoppingCart(productId,flag){
 	}
     
  function goPay(){
+	 if(productTotalSelected>0){
+		 var userId=$('#userId').val();
+		 var shopId=$('#shopId').val();
+		 var url=path+"/shoppingCart/goPay.do?userId="+userId+"&shopId="+shopId;
+	    $('#pageContent').load(url);
+	 }else {
+		 alert("请选择商品");
+	 }
+	
+    }
+ 
+ function returnShopList(){
 	 var userId=$('#userId').val();
 	 var shopId=$('#shopId').val();
-	 var url=path+"/shoppingCart/goPay.do?userId="+userId+"&shopId="+shopId;
-    $('#pageContent').load(url);
-    }
+	  var  url=path+"/shop/getShops.do"; 
+	$('#pageContent').load(url);
+ }
     </script>

@@ -15,5 +15,7 @@ public interface IProductTypeDao {
   List<ProductType> selectAll(ProductType productType) throws Exception;
   
   ProductType selectProductTypeById(String productTypeId)     throws Exception;
+  
+  long getCountAll(ProductType productType) throws Exception;
 
 }

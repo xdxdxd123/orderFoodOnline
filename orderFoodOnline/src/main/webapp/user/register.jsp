@@ -48,7 +48,7 @@ basePath =<%=basepath%>;
 
 							<div class="position-relative">
 			
-								<div id="signup-box" class="signup-box widget-box no-border visible">
+								<div id="signup-box" class="signup-box widget-box no-border visible" style="color:blue">
 									<div class="widget-body">
 										<div class="widget-main">
 										<h4 class="header blue lighter bigger">
@@ -107,7 +107,7 @@ basePath =<%=basepath%>;
 															<span class="bigger-110">重置</span>
 														</button>
 
-														<button type="button" class="width-65 pull-right btn btn-sm btn-success blue" onclick="register()">
+														<button type="button" class="width-65 pull-right btn btn-sm btn-primary white" onclick="register()">
 															<span class="bigger-110" >注册</span>
 														</button>
 													</div>
@@ -115,8 +115,8 @@ basePath =<%=basepath%>;
 											</form>
 										</div>
 
-										<div class="toolbar center blue">
-											<a href="#" onclick="login()">
+										<div class="toolbar center">
+											<a href="#" onclick="login()" style="color:white">
 												已有账号，去登录
 											</a>
 										</div>
